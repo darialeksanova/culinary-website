@@ -1,5 +1,6 @@
 :root {
   --font-default: 'Abhaya Libre', serif;
+  --color-primary: rgb(180, 221, 145);
 }
 
 body {
