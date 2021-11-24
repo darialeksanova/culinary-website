@@ -11,8 +11,8 @@ const Header = () => {
         <img className={styles.logo} src={logo} alt='logo'></img>
       </div>
       <ul className={styles.navigation}>
-        <li><NavLink end to='/recipes' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>Главная</NavLink></li>
-        <li><NavLink end to='/my-recipe-book' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>Моя книга рецептов</NavLink></li>
+        <li><NavLink end to='/recipes' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>Home</NavLink></li>
+        <li><NavLink end to='/my-recipe-book' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>My recipe book</NavLink></li>
       </ul>
       <div className={styles.searchIconContainer}>
         <img className={styles.searchIcon} src={searchIcon} alt='search'></img>
