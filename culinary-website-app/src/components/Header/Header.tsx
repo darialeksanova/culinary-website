@@ -10,8 +10,8 @@ const Header = () => {
         <img className={styles.logo} src={logo} alt='logo'></img>
       </div>
       <nav className={styles.navigation}>
-        <li className={styles.navigationLink}>Главная</li>
-        <li className={styles.navigationLink}>Моя книга рецептов</li>
+        <li className={styles.navigationLink}>Home</li>
+        <li className={styles.navigationLink}>My recipe book</li>
       </nav>
       <div className={styles.searchIconContainer}>
         <img className={styles.searchIcon} src={searchIcon} alt='search'></img>
