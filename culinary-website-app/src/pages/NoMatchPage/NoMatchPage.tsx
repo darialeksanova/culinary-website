@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './NoMatchPage.module.css';
 
-const NoMatch = () => {
+const NoMatchPage = () => {
   return (
     <div className={styles.noMatch}>
       <h1 className={styles.error}>404</h1>
@@ -10,4 +10,4 @@ const NoMatch = () => {
   );
 };
 
-export default NoMatch;
+export default NoMatchPage;
