@@ -1,7 +1,7 @@
-import { LoadRecipesStartedAction, RecipesAction } from "./types";
+import { LoadRecipesStartedAction, RecipesPreviewAction } from "./types";
 
 export const startRecipesLoading = (): LoadRecipesStartedAction => {
   return {
-    type: RecipesAction.LOAD_RECIPES_STARTED,
+    type: RecipesPreviewAction.LOAD_RECIPES_PREVIEW_STARTED,
   };
 };

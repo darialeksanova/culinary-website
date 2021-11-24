@@ -1,23 +1,23 @@
 import { Reducer } from "redux";
-import { RecipesAction, RecipesReducerAction, RecipesState } from "./types";
+import { RecipesPreviewAction, RecipesPreviewReducerAction, RecipesPreviewState } from "./types";
 
-const InitialState: RecipesState = {
+const initialState: RecipesPreviewState = {
   recipes: [],
   isLoading: false,
   isLoaded: false,
   error: null
 };
 
-export const recipesReducer: Reducer<RecipesState, RecipesReducerAction> = (state = InitialState, action) => {
+export const recipesReducer: Reducer<RecipesPreviewState, RecipesPreviewReducerAction> = (state = initialState, action) => {
   switch (action.type) {
-    case RecipesAction.LOAD_RECIPES_STARTED: {
+    case RecipesPreviewAction.LOAD_RECIPES_PREVIEW_STARTED: {
       return {
         ...state,
         isLoading: true,
       };
     }
 
-    case RecipesAction.LOAD_RECIPES_SUCCESS: {
+    case RecipesPreviewAction.LOAD_RECIPES_PREVIEW_SUCCESS: {
       return {
         ...state,
         recipes: action.payload,
@@ -26,7 +26,7 @@ export const recipesReducer: Reducer<RecipesState, RecipesReducerAction> = (stat
       };
     }
 
-    case RecipesAction.LOAD_RECIPES_FAILURE: {
+    case RecipesPreviewAction.LOAD_RECIPES_PREVIEW_FAILURE: {
       return {
         ...state,
         isLoading: false,

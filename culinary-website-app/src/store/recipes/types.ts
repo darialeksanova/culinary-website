@@ -1,25 +1,25 @@
-import { Recipe } from "../../types/recipe";
+import { RecipePreview } from "../../types/recipePreview";
 import { Action } from 'redux';
 import { ActionPayload } from "../../types/actionPayload";
 
-export type RecipesState = {
-  recipes: Recipe[];
+export type RecipesPreviewState = {
+  recipes: RecipePreview[];
   isLoading: boolean;
   isLoaded: boolean;
   error: null | Error;
 };
 
-export enum RecipesAction {
-  LOAD_RECIPES_STARTED = 'get-all-recipes-started',
-  LOAD_RECIPES_SUCCESS = 'get-all-recipes-success',
-  LOAD_RECIPES_FAILURE = 'get-all-recipes-failure',
+export enum RecipesPreviewAction {
+  LOAD_RECIPES_PREVIEW_STARTED = 'get-all-recipes-started',
+  LOAD_RECIPES_PREVIEW_SUCCESS = 'get-all-recipes-success',
+  LOAD_RECIPES_PREVIEW_FAILURE = 'get-all-recipes-failure',
 }
 
-export type LoadRecipesStartedAction = Action<RecipesAction.LOAD_RECIPES_STARTED>;
-export type LoadRecipesSuccessAction = ActionPayload<RecipesAction.LOAD_RECIPES_SUCCESS, Recipe[]>;
-export type LoadRecipesFailureAction = ActionPayload<RecipesAction.LOAD_RECIPES_FAILURE, null | Error>;
+export type LoadRecipesStartedAction = Action<RecipesPreviewAction.LOAD_RECIPES_PREVIEW_STARTED>;
+export type LoadRecipesSuccessAction = ActionPayload<RecipesPreviewAction.LOAD_RECIPES_PREVIEW_SUCCESS, RecipePreview[]>;
+export type LoadRecipesFailureAction = ActionPayload<RecipesPreviewAction.LOAD_RECIPES_PREVIEW_FAILURE, null | Error>;
 
-export type RecipesReducerAction = 
+export type RecipesPreviewReducerAction = 
     LoadRecipesStartedAction 
   | LoadRecipesSuccessAction
   | LoadRecipesFailureAction;
