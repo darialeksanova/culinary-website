@@ -1,3 +1,4 @@
+import RecipePreviewComponent from 'components/RecipePreviewComponent/RecipePreviewComponent';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadRecipesPreviews } from 'store/recipes/actions';
@@ -16,7 +17,7 @@ const MainPage = () => {
     <div className={styles.mainPage}>
       <h1 className={styles.pageTitle}>Recipes</h1>
       <ul className={styles.recipesList}>
-        {/* {recipePreviewItems.map(item => item.title)} */}
+        {recipePreviewItems.map(item => <RecipePreviewComponent key={item.id} recipePreview={item} />)}
       </ul>
       <div className={styles.actions}>
         <button className={styles.showMoreButton}>Show more</button>
