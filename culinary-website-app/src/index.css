@@ -2,6 +2,7 @@
   --font-default: 'Abhaya Libre', serif;
   --color-primary: rgb(180, 221, 145);
   --color-background: rgb(243, 243, 243);
+  --color-border: rgb(230, 230, 230);
 }
 
 body {
