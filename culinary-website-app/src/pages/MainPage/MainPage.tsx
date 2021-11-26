@@ -15,11 +15,11 @@ const MainPage = () => {
 
   return (
     <div className={styles.mainPage}>
-      <h1 className={styles.pageTitle}>Recipes</h1>
+      <h1 className={styles.mainPageTitle}>Recipes</h1>
       <ul className={styles.recipesList}>
         {recipePreviewItems.map(item => <RecipePreviewComponent key={item.id} recipePreview={item} />)}
       </ul>
-      <div className={styles.actions}>
+      <div className={styles.mainPageActions}>
         <button className={styles.showMoreButton}>Show more</button>
       </div>
     </div>
