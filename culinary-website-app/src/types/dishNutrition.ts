@@ -1,4 +1,4 @@
-export type RecipeNutrients = {
+export type DishNutrition = {
   calories: string,
   carbs: string,
   fat: string,

@@ -35,7 +35,7 @@ export const recipesPreviewsReducer: Reducer<RecipesPreviewsState, RecipesPrevie
     }
 
     default: {
-      return state
+      return state;
     }
-  }
+  };
 };

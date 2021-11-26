@@ -3,20 +3,20 @@ import { Dispatch } from "redux";
 import { RecipePreview } from "types/recipePreview";
 import { LoadRecipesPreviewsFailureAction, LoadRecipesPreviewsStartedAction, LoadRecipesPreviewsSuccessAction, RecipesPreviewsAction } from "./types";
 
-export const startRecipesPreviewLoading = (): LoadRecipesPreviewsStartedAction => {
+const startRecipesPreviewLoading = (): LoadRecipesPreviewsStartedAction => {
   return {
     type: RecipesPreviewsAction.LOAD_RECIPES_PREVIEWS_STARTED,
   };
 };
 
-export const setRecipesPreviews = (recipesPrewiews: RecipePreview[]): LoadRecipesPreviewsSuccessAction => {
+const setRecipesPreviews = (recipesPrewiews: RecipePreview[]): LoadRecipesPreviewsSuccessAction => {
   return {
     type: RecipesPreviewsAction.LOAD_RECIPES_PREVIEWS_SUCCESS,
     payload: recipesPrewiews,
   };
 };
 
-export const setError = (error: Error): LoadRecipesPreviewsFailureAction => {
+const setError = (error: Error): LoadRecipesPreviewsFailureAction => {
   return {
     type: RecipesPreviewsAction.LOAD_RECIPES_PREVIEWS_FAILURE,
     payload: error,
@@ -25,7 +25,7 @@ export const setError = (error: Error): LoadRecipesPreviewsFailureAction => {
 
 export const loadRecipesPreviews = () => (dispatch: Dispatch) => {
   dispatch(startRecipesPreviewLoading());
-  fetch(`${API_URL}/recipes/complexSearch?apiKey=${API_KEY}&number=1`)
+  fetch(`${API_URL}/recipes/complexSearch?apiKey=${API_KEY}&number=3`)
   .then(response => {
     if(response.ok) {
       return response.json();
