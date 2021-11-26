@@ -35,7 +35,7 @@ const MainPage = () => {
   };
 
   return (
-    <div className={styles.mainPage}>
+    <div className={styles.mainPageContainer}>
       <h1 className={styles.mainPageTitle}>Recipes</h1>
       <ul className={styles.recipesList}>
         {recipePreviewItems.slice(0, visibleRecipesAmount).map(item => <RecipePreviewComponent key={item.id} recipePreview={item} />)}
