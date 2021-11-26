@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { loadFullRecipeById } from 'store/fullRecipe/actions';
 import { loadDishNutrition } from 'store/dishNutrition/actions';
@@ -58,14 +59,23 @@ const RecipePage = () => {
           <div className={styles.recipeSummary}>{fullRecipe.summary}</div>
         </div>
         <h2 className={styles.recipeInstructionsTitle}>How to cook?</h2>
-        <div className={styles.recipeInstructions}>{fullRecipe.analyzedInstructions[0].steps.map((step, index) => {
-          return (
-            <React.Fragment key={index}> 
-              <h4 className={styles.stepNumber}>Step {index + 1}</h4>
-              <div className={styles.step}>{step.step}</div>
-            </React.Fragment>
-          )})}
-        </div>
+        {(fullRecipe.analyzedInstructions.length !== 0) ? (
+          <>
+            <div className={styles.recipeInstructions}>{fullRecipe.analyzedInstructions[0].steps.map((step, index) => {
+              return (
+                <React.Fragment key={index}> 
+                  <h4 className={styles.stepNumber}>Step {index + 1}</h4>
+                  <div className={styles.step}>{step.step}</div>
+                </React.Fragment>
+              )})}
+            </div>
+          </>
+        ) : 
+          <div className={styles.noInstructionsMessage}>Unfortunately, there is no step-by-step recipe for this dish yet :c</div>
+        }
+        <NavLink to={`/recipes`} className={styles.linkToSearchResults}>
+          <button className={styles.backToSearchResultsButton}>Back to search results</button>
+        </NavLink>
       </div>
     </div>
   );
