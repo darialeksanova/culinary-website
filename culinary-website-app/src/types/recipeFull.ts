@@ -5,13 +5,15 @@ export type RecipeFull = {
   servings: number,
   image: string;
   summary: string;
-  analyzedInstructions: [{
-    steps: [{
-      step: string;
-    }];
-  }];
+  analyzedInstructions: Instructions[] | [];
   vegetarian: boolean;
   vegan: boolean;
   glutenFree: boolean;
   dairyFree: boolean;
+};
+
+type Instructions = {
+  steps: [{
+    step: string;
+  }];
 };
