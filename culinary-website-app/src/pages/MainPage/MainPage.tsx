@@ -1,7 +1,7 @@
 import RecipePreviewComponent from 'components/RecipePreviewComponent/RecipePreviewComponent';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadRecipesPreviews } from 'store/recipes/actions';
+import { loadRecipesPreviews } from 'store/recipesPreviews/actions';
 import { RootState } from 'store/store';
 import styles from './MainPage.module.css';
 
