@@ -1,9 +1,10 @@
 .mainPage {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.pageTitle {
+.mainPageTitle {
   flex-shrink: 0;
 }
 
@@ -13,7 +14,7 @@
   padding: 0;
 }
 
-.actions {
+.mainPageActions {
   display: flex;
   flex-shrink: 0;
 }
