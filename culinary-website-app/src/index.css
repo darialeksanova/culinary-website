@@ -1,8 +1,10 @@
 :root {
   --font-default: 'Abhaya Libre', serif;
   --color-primary: rgb(180, 221, 145);
-  --color-background: rgb(243, 243, 243);
+  --color-secondary: rgb(222, 240, 211);
+  --color-app-background: rgb(243, 243, 243);
   --color-border: rgb(230, 230, 230);
+  --color-warning: rgb(240, 211, 211);
 }
 
 body {
