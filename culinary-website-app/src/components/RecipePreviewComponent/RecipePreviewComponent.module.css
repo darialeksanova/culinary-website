@@ -45,8 +45,7 @@
   flex-shrink: 0;
 }
 
-.addToFavouritesButton,
-.openRecipePageButton {
+.recipePreviewComponentButton {
   width: 220px;
   height: 30px;
   margin: 0 10px;
@@ -55,6 +54,14 @@
   background-color: transparent;
   font-size: 14px;
   cursor: pointer;
+}
+
+.addToFavouritesButton {
+  background-color: var(--color-secondary);
+}
+
+.deleteFromFavouritesButton {
+  background-color: var(--color-warning);
 }
 
 .recipeDetailsLink {
