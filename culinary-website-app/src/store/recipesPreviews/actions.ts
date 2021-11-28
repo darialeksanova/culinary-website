@@ -25,7 +25,7 @@ const setError = (error: Error): LoadRecipesPreviewsFailureAction => {
 
 export const loadRecipesPreviews = () => (dispatch: Dispatch) => {
   dispatch(startRecipesPreviewLoading());
-  fetch(`${API_URL}/recipes/complexSearch?apiKey=${API_KEY}&number=10`)
+  fetch(`${API_URL}/recipes/complexSearch?apiKey=${API_KEY}&number=3`)
   .then(response => {
     if(response.ok) {
       return response.json();

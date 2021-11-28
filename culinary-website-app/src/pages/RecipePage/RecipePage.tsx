@@ -9,11 +9,18 @@ import styles from './RecipePage.module.css';
 import servingsIcon from 'assets/servingsIcon.png';
 import cookingTimeIcon from 'assets/cookingTimeIcon.png';
 import bookmark from 'assets/bookmark.png';
+import bin from 'assets/bin.png';
+import { addRecipeToFavourites, deleteRecipeFromFavourites } from 'store/favouriteRecipes/actions';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles); 
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
   const fullRecipe = useSelector((state: RootState) => state.fullRecipe.fullRecipe);
   const dishNutrition = useSelector((state: RootState) => state.dishNutrition.dishNutrition);
+  const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
+  const isRecipeFavourite = Boolean(favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -22,6 +29,18 @@ const RecipePage = () => {
       dispatch(loadDishNutrition(params.recipeId));
     };
   }, [dispatch, params]);
+
+  const handleAddToMyRecipeBookButtonClick = () => {
+    if (params.recipeId) {
+      dispatch(addRecipeToFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
+    };
+  };
+
+  const handleDeleteFromMyRecipeBookButtonClick = () => {
+    if (params.recipeId) {
+    dispatch(deleteRecipeFromFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
+    };
+  };
 
   return (
     <div className={styles.recipePage}>
@@ -36,12 +55,34 @@ const RecipePage = () => {
             <img className={styles.servingsIcon} src={cookingTimeIcon} alt='servings'></img>
             {fullRecipe.readyInMinutes} min
           </div>
-          <button className={styles.addToFavouritesButton}>
-            <div className={styles.addToFavouritesIconContainer}>
-              <img className={styles.addToFavouritesIcon} src={bookmark} alt='save'></img>
-            </div>
-            <div className={styles.addToFavouritesLabel}>Add to my recipe book</div>
-          </button>
+          {!isRecipeFavourite && (
+            <button 
+              className={cx({
+                favouritesButton: true,
+                addToFavouritesButton: true,
+              })} 
+              onClick={handleAddToMyRecipeBookButtonClick}
+            >
+              <div className={styles.favouritesIconContainer}>
+                <img className={styles.favouritesIcon} src={bookmark} alt='save'></img>
+              </div>
+              <div className={styles.favouritesLabel}>Add to my recipe book</div>
+            </button>
+          )}
+          {isRecipeFavourite && (
+            <button 
+              className={cx({
+                favouritesButton: true,
+                deleteFromFavouritesButton: true,
+              })} 
+              onClick={handleDeleteFromMyRecipeBookButtonClick}
+            >
+              <div className={styles.favouritesIconContainer}>
+                <img className={styles.favouritesIcon} src={bin} alt='save'></img>
+              </div>
+              <div className={styles.favouritesLabel}>Delete from my recipe book</div>
+            </button>
+          )}
         </div>
         <div className={styles.nutritionContainer}>
           <h2 className={styles.nutritionTitle}>Nutrition Value</h2>

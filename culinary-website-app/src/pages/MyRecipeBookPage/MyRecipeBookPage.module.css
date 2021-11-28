@@ -1,0 +1,34 @@
+.favouritesPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favouritesPageTitle {
+  flex-shrink: 0;
+}
+
+.favouritesList {
+  flex-grow: 1;
+  list-style: none;
+  padding: 0;
+}
+
+.favouritesPageActions {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.showMoreButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 30px;
+  border: none;
+  border-bottom: 2px solid black;
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
