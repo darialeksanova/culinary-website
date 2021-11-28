@@ -108,7 +108,9 @@
 }
 
 .recipeSummary {
-  padding: 60px 100px 30px 100px;
+  padding: 60px 0 30px 0;
+  width: 760px;
+  flex-shrink: 0;
   font-size: 18px;
   text-align: justify;
 }
@@ -127,6 +129,8 @@
 .recipeInstructions {
   display: flex;
   flex-direction: column;
+  width: 760px;
+  flex-shrink: 0;
 }
 
 .stepNumber {
