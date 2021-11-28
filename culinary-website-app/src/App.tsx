@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import './App.module.css';
 import styles from './App.module.css';
 import Header from 'components/Header';
@@ -7,8 +7,16 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import NoMatchPage from 'pages/NoMatchPage';
 import MyRecipeBookPage from 'pages/MyRecipeBookPage';
 import RecipePage from 'pages/RecipePage';
+import { useDispatch } from 'react-redux';
+import { loadFavouriteRecipesIdsFromLocalStorage } from 'store/favouriteRecipesIds/actions';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadFavouriteRecipesIdsFromLocalStorage());
+  }, [dispatch]);
+
   return (
     <Router>
       <div className={styles.App}>
