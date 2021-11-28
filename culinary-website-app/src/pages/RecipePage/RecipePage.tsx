@@ -97,7 +97,7 @@ const RecipePage = () => {
           <img className={styles.recipeImage} src={fullRecipe.image} alt='dish'></img>
         </div>
         <div className={styles.recipeFullDescription}>
-          <div className={styles.recipeSummary}>{fullRecipe.summary}</div>
+        <div className={styles.recipeSummary} dangerouslySetInnerHTML={{__html: fullRecipe.summary}}></div>
         </div>
         <h2 className={styles.recipeInstructionsTitle}>How to cook?</h2>
         {(fullRecipe.analyzedInstructions.length !== 0) ? (
