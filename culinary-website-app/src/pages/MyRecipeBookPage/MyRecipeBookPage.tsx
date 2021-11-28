@@ -1,14 +1,12 @@
 import RecipePreviewComponent from 'components/RecipePreviewComponent';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-// import { loadRecipesPreviews } from 'store/recipesPreviews/actions';
 import { RootState } from 'store/store';
 import styles from './MyRecipeBookPage.module.css';
 
 const MyRecipeBookPage = () => {
   const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
-  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -16,10 +14,6 @@ const MyRecipeBookPage = () => {
   const totalRecipes = query.get('totalRecipes') || '5';
 
   const [visibleRecipesAmount, setVisibleRecipesAmount] = useState(Number(totalRecipes));
-
-  useEffect(() => {
-    // dispatch(loadRecipesPreviews());
-  }, [dispatch]);
 
   const handleShowMoreButtonClick = () => {
     const query = new URLSearchParams(location.search);
