@@ -8,13 +8,13 @@ import NoMatchPage from 'pages/NoMatchPage';
 import MyRecipeBookPage from 'pages/MyRecipeBookPage';
 import RecipePage from 'pages/RecipePage';
 import { useDispatch } from 'react-redux';
-import { loadFavouriteRecipesIdsFromLocalStorage } from 'store/favouriteRecipesIds/actions';
+import { loadFavouriteRecipesFromLocalStorage } from 'store/favouriteRecipes/actions';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadFavouriteRecipesIdsFromLocalStorage());
+    dispatch(loadFavouriteRecipesFromLocalStorage());
   }, [dispatch]);
 
   return (

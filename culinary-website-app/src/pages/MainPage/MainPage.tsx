@@ -8,7 +8,7 @@ import styles from './MainPage.module.css';
 
 const MainPage = () => {
   const recipePreviewItems = useSelector((state: RootState) => state.recipesPreviews.recipesPreviews);
-  const favouriteRecipesIds = useSelector((state: RootState) => state.favouriteRecipesIds.favouriteRecipesIds);
+  const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const MainPage = () => {
       <h1 className={styles.mainPageTitle}>Recipes</h1>
       <ul className={styles.recipesList}>
         {recipePreviewItems.slice(0, visibleRecipesAmount).map(recipe =>
-          favouriteRecipesIds.find(recipeId => recipeId === recipe.id) ?
+          favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === recipe.id) ?
           <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={true}/> :
           <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={false}/>
         )}

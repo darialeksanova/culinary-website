@@ -10,7 +10,7 @@ import servingsIcon from 'assets/servingsIcon.png';
 import cookingTimeIcon from 'assets/cookingTimeIcon.png';
 import bookmark from 'assets/bookmark.png';
 import bin from 'assets/bin.png';
-import { addRecipeToFavourites, deleteRecipeFromFavourites } from 'store/favouriteRecipesIds/actions';
+import { addRecipeToFavourites, deleteRecipeFromFavourites } from 'store/favouriteRecipes/actions';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles); 
@@ -19,8 +19,8 @@ const RecipePage = () => {
   const params = useParams<'recipeId'>();
   const fullRecipe = useSelector((state: RootState) => state.fullRecipe.fullRecipe);
   const dishNutrition = useSelector((state: RootState) => state.dishNutrition.dishNutrition);
-  const favouriteRecipesIds = useSelector((state: RootState) => state.favouriteRecipesIds.favouriteRecipesIds);
-  const isRecipeFavourite = favouriteRecipesIds.includes(Number(params.recipeId));
+  const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
+  const isRecipeFavourite = Boolean(favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -32,13 +32,13 @@ const RecipePage = () => {
 
   const handleAddToMyRecipeBookButtonClick = () => {
     if (params.recipeId) {
-      dispatch(addRecipeToFavourites(Number(params.recipeId)));
+      dispatch(addRecipeToFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
     };
   };
 
   const handleDeleteFromMyRecipeBookButtonClick = () => {
     if (params.recipeId) {
-    dispatch(deleteRecipeFromFavourites(Number(params.recipeId)));
+    dispatch(deleteRecipeFromFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
     };
   };
 

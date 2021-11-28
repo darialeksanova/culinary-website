@@ -4,11 +4,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { fullRecipeReducer } from './fullRecipe/fullRecipeReducer';
 import { dishNutritionReducer } from './dishNutrition/dishNutritionReducer';
-import { favouriteRecipesIdsReducer } from './favouriteRecipesIds/favouriteRecipesIdsReducer';
+import { favouriteRecipesReducer } from './favouriteRecipes/favouriteRecipesReducer';
 
 const rootReducer = combineReducers({
   recipesPreviews: recipesPreviewsReducer,
-  favouriteRecipesIds: favouriteRecipesIdsReducer,
+  favouriteRecipes: favouriteRecipesReducer,
   fullRecipe: fullRecipeReducer,
   dishNutrition: dishNutritionReducer,
 });
