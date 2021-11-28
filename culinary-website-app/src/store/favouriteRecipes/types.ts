@@ -6,7 +6,7 @@ export type FavouriteRecipesState = {
 };
 
 export enum FavouriteRecipesAction {
-  LOAD_FAVOURITE_RECIPES = 'get-favourite-recipes',
+  LOAD_FAVOURITE_RECIPES = 'load-favourite-recipes',
 }
 
 export type GetFavouriteRecipesAction = ActionPayload<FavouriteRecipesAction.LOAD_FAVOURITE_RECIPES, RecipePreview[]>;
