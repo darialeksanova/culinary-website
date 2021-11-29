@@ -1,0 +1,3 @@
+import ConfirmDeleteRecipeModalComponent from "./ConfirmDeleteRecipeModalComponent";
+
+export default ConfirmDeleteRecipeModalComponent;
