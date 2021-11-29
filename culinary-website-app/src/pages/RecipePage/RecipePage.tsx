@@ -22,7 +22,6 @@ const RecipePage = () => {
   const dishNutrition = useSelector((state: RootState) => state.dishNutrition.dishNutrition);
   const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
   const isFullRecipeLoaded = useSelector((state: RootState) => state.fullRecipe.isLoaded);
-  console.log(isFullRecipeLoaded)
   const isDishNutritionLoaded = useSelector((state: RootState) => state.dishNutrition.isLoaded);
   const isRecipeFavourite = Boolean(favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
   const dispatch = useDispatch();
@@ -48,7 +47,7 @@ const RecipePage = () => {
 
   return (
     <>
-      {!isFullRecipeLoaded ? 
+      {(!isFullRecipeLoaded && !isDishNutritionLoaded) ? 
         <Loader /> : (
         <div className={styles.recipePage}>
           <h1 className={styles.recipeTitle}>{fullRecipe.title}</h1>
