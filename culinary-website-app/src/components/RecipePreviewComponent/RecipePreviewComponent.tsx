@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { addRecipeToFavourites, deleteRecipeFromFavourites } from 'store/favouriteRecipes/actions';
+import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
 import { RecipePreview } from 'types/recipePreview';
 import styles from './RecipePreviewComponent.module.css';
 import classNames from 'classnames/bind';

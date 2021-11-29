@@ -10,7 +10,7 @@ import servingsIcon from 'assets/servingsIcon.png';
 import cookingTimeIcon from 'assets/cookingTimeIcon.png';
 import bookmark from 'assets/bookmark.png';
 import bin from 'assets/bin.png';
-import { addRecipeToFavourites, deleteRecipeFromFavourites } from 'store/favouriteRecipes/actions';
+import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
 import classNames from 'classnames/bind';
 import Loader from 'components/Loader';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
