@@ -1,3 +1,4 @@
+import Loader from 'components/Loader';
 import RecipePreviewComponent from 'components/RecipePreviewComponent/RecipePreviewComponent';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +10,7 @@ import styles from './MainPage.module.css';
 const MainPage = () => {
   const recipePreviewItems = useSelector((state: RootState) => state.recipesPreviews.recipesPreviews);
   const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
+  const areRecipePreviewsLoaded = useSelector((state: RootState) => state.recipesPreviews.isLoaded);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,19 +37,25 @@ const MainPage = () => {
   };
 
   return (
-    <div className={styles.mainPageContainer}>
-      <h1 className={styles.mainPageTitle}>Recipes</h1>
-      <ul className={styles.recipesList}>
-        {recipePreviewItems.slice(0, visibleRecipesAmount).map(recipe =>
-          favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === recipe.id) ?
-          <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={true}/> :
-          <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={false}/>
-        )}
-      </ul>
-      <div className={styles.mainPageActions}>
-        <button className={styles.showMoreButton} onClick={handleShowMoreButtonClick}>Show more</button>
-      </div>
-    </div>
+    <>
+      {!areRecipePreviewsLoaded ? 
+        <Loader /> : (
+        <div className={styles.mainPageContainer}>
+          <h1 className={styles.mainPageTitle}>Recipes</h1>
+          <ul className={styles.recipesList}>
+            {recipePreviewItems.slice(0, visibleRecipesAmount).map(recipe =>
+              favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === recipe.id) ?
+              <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={true}/> :
+              <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={false}/>
+            )}
+          </ul>
+          <div className={styles.mainPageActions}>
+            <button className={styles.showMoreButton} onClick={handleShowMoreButtonClick}>Show more</button>
+          </div>
+        </div>
+        )
+      }
+    </>
   );
 };
 
