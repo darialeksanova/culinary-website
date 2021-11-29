@@ -99,6 +99,8 @@
   align-items: center;
   width: 560px;
   height: 360px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
 }
 
 .recipeImage {
@@ -109,10 +111,10 @@
 
 .recipeSummary {
   padding: 60px 0 30px 0;
-  width: 760px;
-  flex-shrink: 0;
+  max-width: 760px;
   font-size: 18px;
   text-align: justify;
+  line-height: 30px;
 }
 
 .recipeSummary a {
@@ -121,7 +123,6 @@
   color: black;
 }
 
-
 .recipeInstructionsTitle {
   margin: 60px 0 50px 0;
 }
@@ -129,8 +130,7 @@
 .recipeInstructions {
   display: flex;
   flex-direction: column;
-  width: 760px;
-  flex-shrink: 0;
+  max-width: 760px;
 }
 
 .stepNumber {
