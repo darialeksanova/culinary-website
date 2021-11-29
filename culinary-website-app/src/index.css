@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Indie+Flower&display=swap');
+
 :root {
-  --font-default: 'Abhaya Libre', serif;
+  --font-default: 'Courgette', serif;
   --color-primary: rgb(180, 221, 145);
   --color-secondary: rgba(245, 255, 239, 0.884);
   --color-app-background: rgb(243, 243, 243);
@@ -14,10 +16,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: var(--font-default);
-}
-
 * {
   box-sizing: border-box;
+  font-family: var(--font-default);
 }
