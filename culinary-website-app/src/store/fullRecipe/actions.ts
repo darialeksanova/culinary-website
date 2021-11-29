@@ -37,7 +37,7 @@ export const loadFullRecipeById = (recipeId: string) => (dispatch: Dispatch) => 
     dispatch(setFullrecipe(fullRecipeObj));
   })
   .catch((error: Error) => {
-    console.log('Sourse is not reachable!');
+    console.log('Source is not reachable!');
     dispatch(setFullRecipeLoadError(error));
   });
 };

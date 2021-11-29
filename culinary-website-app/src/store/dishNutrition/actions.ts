@@ -37,7 +37,7 @@ export const loadDishNutrition = (recipeId: string) => (dispatch: Dispatch) => {
     dispatch(setDishNutrition(dishNutrientsObj));
   })
   .catch((error: Error) => {
-    console.log('Sourse is not reachable!');
+    console.log('Source is not reachable!');
     dispatch(setDishNutritionLoadError(error));
   });
 };
