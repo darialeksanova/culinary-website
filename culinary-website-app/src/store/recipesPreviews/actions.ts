@@ -37,7 +37,7 @@ export const loadRecipesPreviews = () => (dispatch: Dispatch) => {
     dispatch(setRecipesPreviews(recipePreviewItemsObj['results']))
   })
   .catch((error: Error) => {
-    console.log('Sourse is not reachable!');
+    console.log('Source is not reachable!');
     dispatch(setError(error));
   });
 };
