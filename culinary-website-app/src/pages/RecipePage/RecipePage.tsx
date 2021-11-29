@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router';
@@ -13,10 +13,12 @@ import bin from 'assets/bin.png';
 import { addRecipeToFavourites, deleteRecipeFromFavourites } from 'store/favouriteRecipes/actions';
 import classNames from 'classnames/bind';
 import Loader from 'components/Loader';
+import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
 
 const cx = classNames.bind(styles); 
 
 const RecipePage = () => {
+  const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
   const params = useParams<'recipeId'>();
   const fullRecipe = useSelector((state: RootState) => state.fullRecipe.fullRecipe);
   const dishNutrition = useSelector((state: RootState) => state.dishNutrition.dishNutrition);
@@ -39,14 +41,18 @@ const RecipePage = () => {
     };
   };
 
-  const handleDeleteFromMyRecipeBookButtonClick = () => {
-    if (params.recipeId) {
-    dispatch(deleteRecipeFromFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
-    };
+  const openConfirmDeleteRecipeModal = () => {
+    setIsConfirmRecipeDeleteModalVisible(true);
   };
 
   return (
     <>
+      {isConfirmRecipeDeleteModalVisible && 
+        <ConfirmDeleteRecipeModalComponent 
+          recipePreview={ {id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image} }
+          closeModal={() => setIsConfirmRecipeDeleteModalVisible(false)}
+        />
+      }
       {(!isFullRecipeLoaded && !isDishNutritionLoaded) ? 
         <Loader /> : (
         <div className={styles.recipePage}>
@@ -81,7 +87,7 @@ const RecipePage = () => {
                     favouritesButton: true,
                     deleteFromFavouritesButton: true,
                   })} 
-                  onClick={handleDeleteFromMyRecipeBookButtonClick}
+                  onClick={openConfirmDeleteRecipeModal}
                 >
                   <div className={styles.favouritesIconContainer}>
                     <img className={styles.favouritesIcon} src={bin} alt='save'></img>
