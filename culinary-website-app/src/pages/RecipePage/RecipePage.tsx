@@ -9,14 +9,12 @@ import cookingTimeIcon from 'assets/cookingTimeIcon.png';
 import bookmark from 'assets/bookmark.png';
 import bin from 'assets/bin.png';
 import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
-import classNames from 'classnames/bind';
 import Loader from 'components/Loader';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
 import { API_URL, API_KEY } from 'constants/index';
 import { RecipeFull } from 'types/recipeFull';
 import { DishNutrition } from 'types/dishNutrition';
-
-const cx = classNames.bind(styles); 
+import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
@@ -91,33 +89,23 @@ const RecipePage = () => {
                 <img className={styles.servingsIcon} src={cookingTimeIcon} alt='servings'></img>
                 {fullRecipe.readyInMinutes} min
               </div>
-              {!isRecipeFavourite && (
-                <button 
-                  className={cx({
-                    favouritesButton: true,
-                    addToFavouritesButton: true,
-                  })} 
-                  onClick={() => handleAddToMyRecipeBookButtonClick(fullRecipe)}
-                >
-                  <div className={styles.favouritesIconContainer}>
-                    <img className={styles.favouritesIcon} src={bookmark} alt='save'></img>
-                  </div>
-                  <div className={styles.favouritesLabel}>Add to my recipe book</div>
-                </button>
-              )}
+              {!isRecipeFavourite && 
+                <MyRecipeBookButton 
+                  text='Add to my recipe book' 
+                  purpose='addButton' 
+                  icon={bookmark}
+                  specialButton
+                  onClick={() => handleAddToMyRecipeBookButtonClick(fullRecipe)} 
+                />
+              }
               {isRecipeFavourite && (
-                <button 
-                  className={cx({
-                    favouritesButton: true,
-                    deleteFromFavouritesButton: true,
-                  })} 
-                  onClick={openConfirmDeleteRecipeModal}
-                >
-                  <div className={styles.favouritesIconContainer}>
-                    <img className={styles.favouritesIcon} src={bin} alt='save'></img>
-                  </div>
-                  <div className={styles.favouritesLabel}>Delete from my recipe book</div>
-                </button>
+                 <MyRecipeBookButton 
+                 text='Delete from my recipe book'
+                 purpose='deleteButton'
+                 icon={bin}
+                 specialButton
+                 onClick={openConfirmDeleteRecipeModal}
+               />
               )}
             </div>
             <div className={styles.nutritionContainer}>

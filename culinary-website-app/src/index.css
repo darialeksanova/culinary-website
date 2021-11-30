@@ -5,8 +5,13 @@
   --color-primary: rgb(180, 221, 145);
   --color-secondary: rgba(245, 255, 239, 0.884);
   --color-app-background: rgb(243, 243, 243);
+  --color-app-main: #fff;
   --color-border: rgb(230, 230, 230);
   --color-warning: rgb(255, 242, 242);
+  --color-app-background-2: rgb(48, 48, 48);
+  --color-app-main-2: rgb(83, 83, 83);
+  --color-secondary-2: rgba(82, 95, 74, 0.884);
+  --color-warning-2: rgb(97, 84, 84);
 }
 
 body {
