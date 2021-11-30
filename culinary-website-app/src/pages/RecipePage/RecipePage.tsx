@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { useParams } from 'react-router';
-import { loadFullRecipeById } from 'store/fullRecipe/actions';
-import { loadDishNutrition } from 'store/dishNutrition/actions';
+import { useNavigate, useParams } from 'react-router';
 import { RootState } from 'store/store';
 import styles from './RecipePage.module.css';
 import servingsIcon from 'assets/servingsIcon.png';
@@ -14,28 +12,54 @@ import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
 import classNames from 'classnames/bind';
 import Loader from 'components/Loader';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
+import { API_URL, API_KEY } from 'constants/index';
+import { RecipeFull } from 'types/recipeFull';
+import { DishNutrition } from 'types/dishNutrition';
 
 const cx = classNames.bind(styles); 
 
 const RecipePage = () => {
-  const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
   const params = useParams<'recipeId'>();
-  const fullRecipe = useSelector((state: RootState) => state.fullRecipe.fullRecipe);
-  const dishNutrition = useSelector((state: RootState) => state.dishNutrition.dishNutrition);
   const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
-  const isFullRecipeLoaded = useSelector((state: RootState) => state.fullRecipe.isLoaded);
-  const isDishNutritionLoaded = useSelector((state: RootState) => state.dishNutrition.isLoaded);
   const isRecipeFavourite = Boolean(favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
+  const [fullRecipe, setFullRecipe] = useState<RecipeFull | null>(null);
+  const [dishNutrition, setDishNutrition] = useState<DishNutrition | null>(null);
   
   useEffect(() => {
     if (params.recipeId) {
-      dispatch(loadFullRecipeById(params.recipeId));
-      dispatch(loadDishNutrition(params.recipeId));
-    };
-  }, [dispatch, params]);
+      Promise.all([
+        fetch(`${API_URL}/recipes/${params.recipeId}/information?apiKey=${API_KEY}`)
+          .then(response => {
+            if(response.ok) {
+              return response.json();
+            }
 
-  const handleAddToMyRecipeBookButtonClick = () => {
+            throw new Error('Error on full recipe fetch!');
+          }), 
+        fetch(`${API_URL}/recipes/${params.recipeId}/nutritionWidget.json?apiKey=${API_KEY}`)
+          .then(response => {
+            if(response.ok) {
+              return response.json();
+            }
+
+            throw new Error('Error on dish nutrients fetch!');
+          })
+      ])
+        .then(([fullRecipeObj, dishNutrition]) => {
+          setFullRecipe(fullRecipeObj);
+          setDishNutrition(dishNutrition);
+        })
+        .catch((_error: Error) => {
+          console.log('Source is not reachable!');
+          navigate('/page-not-found');
+        });
+    };
+}, [dispatch, params, navigate]);
+
+  const handleAddToMyRecipeBookButtonClick = (fullRecipe: RecipeFull) => {
     if (params.recipeId) {
       dispatch(addRecipeToFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
     };
@@ -47,14 +71,14 @@ const RecipePage = () => {
 
   return (
     <>
-      {isConfirmRecipeDeleteModalVisible && 
+      {(isConfirmRecipeDeleteModalVisible && fullRecipe) &&
         <ConfirmDeleteRecipeModalComponent 
           recipePreview={ {id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image} }
           closeModal={() => setIsConfirmRecipeDeleteModalVisible(false)}
         />
       }
-      {(!isFullRecipeLoaded && !isDishNutritionLoaded) ? 
-        <Loader /> : (
+      {(!fullRecipe && !dishNutrition) && <Loader />}
+      {(fullRecipe && dishNutrition) && (
         <div className={styles.recipePage}>
           <h1 className={styles.recipeTitle}>{fullRecipe.title}</h1>
           <div className={styles.recipeContainer}>
@@ -73,7 +97,7 @@ const RecipePage = () => {
                     favouritesButton: true,
                     addToFavouritesButton: true,
                   })} 
-                  onClick={handleAddToMyRecipeBookButtonClick}
+                  onClick={() => handleAddToMyRecipeBookButtonClick(fullRecipe)}
                 >
                   <div className={styles.favouritesIconContainer}>
                     <img className={styles.favouritesIcon} src={bookmark} alt='save'></img>
