@@ -1,0 +1,51 @@
+.favouritesButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  background-color: transparent;
+  margin: 0 30px;
+  cursor:pointer;
+}
+
+.addButton,
+.noButton {
+  background-color: var(--color-secondary);
+}
+
+.deleteButton,
+.yesButton {
+  background-color: var(--color-warning);
+}
+
+.darkButton {
+  background-color: transparent;
+  color: var(--color-app-main);
+}
+
+.specialButton {
+  width: 240px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-bottom: 2px solid black;
+  background-color: transparent;
+}
+
+.favouritesIconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+
+.favouritesIcon {
+  width: 100%;
+  height: 100%;
+}

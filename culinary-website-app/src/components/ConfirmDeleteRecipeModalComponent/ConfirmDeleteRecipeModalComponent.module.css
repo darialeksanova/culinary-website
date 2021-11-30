@@ -32,7 +32,7 @@
   font-size: 16px;
   border: 1px solid var(--color-border);
   border-radius: 3px;
-  background-color: #fff;
+  background-color: var(--color-app-main);
 }
 
 .modalTitle {
@@ -47,21 +47,6 @@
   padding: 10px 0;
 }
 
-.confirmDeleteModalButton {
-  width: 220px;
-  height: 30px;
-  margin: 0 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-  background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.yesButton {
-  background-color: var(--color-warning);
-}
-
-.noButton {
-  background-color: var(--color-secondary);
+.dark {
+  background-color: var(--color-app-main-2);
 }

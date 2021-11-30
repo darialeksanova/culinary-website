@@ -1,10 +1,20 @@
-import React from 'react';
 import styles from './Header.module.css';
 import logo from 'assets/logo.png';
 import searchIcon from 'assets/searchIcon.svg';
 import { NavLink } from 'react-router-dom';
+import sun from 'assets/sun.png';
+import moon from 'assets/moon.png';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { Theme } from 'types/theme';
 
-const Header = () => {
+type Props = {
+  handleThemeSwitch: () => void;
+};
+
+const Header = ({ handleThemeSwitch }: Props) => {
+  const theme = useSelector((state: RootState) => state.theme.theme);
+
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
@@ -14,8 +24,20 @@ const Header = () => {
         <li><NavLink end to='/recipes' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>Home</NavLink></li>
         <li><NavLink end to='/my-recipe-book' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>My recipe book</NavLink></li>
       </ul>
-      <div className={styles.searchIconContainer}>
-        <img className={styles.searchIcon} src={searchIcon} alt='search'></img>
+      <div className={styles.headerActions}>
+        {theme === Theme.light &&
+          <div className={styles.themeSwitchButton} onClick={handleThemeSwitch}>
+            <img className={styles.themeIcon} src={moon} alt='dark'></img>
+          </div>
+        }
+        {theme === Theme.dark &&
+          <div className={styles.themeSwitchButton} onClick={handleThemeSwitch}>
+            <img className={styles.themeIcon} src={sun} alt='light'></img>
+          </div>
+        }
+        <div className={styles.searchIconContainer}>
+          <img className={styles.searchIcon} src={searchIcon} alt='search'></img>
+        </div>
       </div>
     </header>
   );
