@@ -38,3 +38,7 @@
   font-weight: 700;
   cursor: pointer;
 }
+
+.showMoreButtonHidden {
+  display: none;
+}
