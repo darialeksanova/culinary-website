@@ -1,0 +1,32 @@
+.searchBarComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.searchBarContainer {
+  display: flex;
+  justify-content: center;
+  max-width: 1000px;
+  height: 50px;
+  margin: 30px 0 10px 0;
+}
+
+.searchInput {
+  width: 585px;
+  padding: 0 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  background-color: transparent;
+}
+
+.searchFilterButton,
+.searchSubmitButton,
+.filterApplyButton {
+  width: 80px;
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+}

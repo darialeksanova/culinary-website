@@ -1,0 +1,18 @@
+.searchFilterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  height: 35px;
+  padding: 0 133px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+}
+
+.searchFilterItem {
+  margin: 15px;
+}
+
+.searchFilterInput {
+  margin-right: 10px;
+}
