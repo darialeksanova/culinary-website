@@ -1,9 +1,15 @@
+.searchBarComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .searchBarContainer {
   display: flex;
   justify-content: center;
-  width: 1000px;
+  max-width: 1000px;
   height: 50px;
-  margin: 30px 0 60px 0;
+  margin: 30px 0 10px 0;
 }
 
 .searchInput {
@@ -15,7 +21,8 @@
 }
 
 .searchFilterButton,
-.searchSubmitButton {
+.searchSubmitButton,
+.filterApplyButton {
   width: 80px;
   margin-left: 10px;
   cursor: pointer;
