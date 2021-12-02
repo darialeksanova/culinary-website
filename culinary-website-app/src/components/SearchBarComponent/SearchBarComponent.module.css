@@ -21,12 +21,15 @@
 }
 
 .searchFilterButton,
-.searchSubmitButton,
-.filterApplyButton {
+.searchSubmitButton {
   width: 80px;
   margin-left: 10px;
   cursor: pointer;
   background-color: var(--color-primary);
   border: 1px solid var(--color-border);
   border-radius: 2px;
+}
+
+.searchFilterButtonClicked {
+  opacity: 0.6;
 }
