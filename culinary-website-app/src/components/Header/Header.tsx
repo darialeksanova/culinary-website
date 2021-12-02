@@ -1,6 +1,5 @@
 import styles from './Header.module.css';
 import logo from 'assets/logo.png';
-import searchIcon from 'assets/searchIcon.svg';
 import { NavLink } from 'react-router-dom';
 import sun from 'assets/sun.png';
 import moon from 'assets/moon.png';
@@ -35,9 +34,6 @@ const Header = ({ handleThemeSwitch }: Props) => {
             <img className={styles.themeIcon} src={sun} alt='light'></img>
           </div>
         }
-        <div className={styles.searchIconContainer}>
-          <img className={styles.searchIcon} src={searchIcon} alt='search'></img>
-        </div>
       </div>
     </header>
   );
