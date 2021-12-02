@@ -32,7 +32,7 @@ const RecipePage = () => {
         fetch(`${API_URL}/recipes/${params.recipeId}/information?apiKey=${API_KEY}`)
           .then(response => {
             if(response.ok) {
-              return response.json();
+              return response.json() as Promise<RecipeFull>;
             }
 
             throw new Error('Error on full recipe fetch!');
@@ -40,7 +40,7 @@ const RecipePage = () => {
         fetch(`${API_URL}/recipes/${params.recipeId}/nutritionWidget.json?apiKey=${API_KEY}`)
           .then(response => {
             if(response.ok) {
-              return response.json();
+              return response.json() as Promise<DishNutrition>;
             }
 
             throw new Error('Error on dish nutrients fetch!');
