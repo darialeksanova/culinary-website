@@ -89,7 +89,7 @@ const RecipePage = () => {
       {(!fullRecipe && !dishNutrition) && <Loader />}
       {(fullRecipe && dishNutrition) && (
         <div className={styles.recipePage}>
-          <h1 className={styles.recipeTitle}>{fullRecipe.title}</h1>
+          <h1 className={styles.recipeTitle}>{fullRecipe.title[0].toUpperCase()}{fullRecipe.title.slice(1).toLowerCase()}</h1>
           <div className={styles.recipeContainer}>
             <div className={styles.recipeShortDescription}>
               <div className={styles.shortDescriptionItem}>
@@ -120,7 +120,7 @@ const RecipePage = () => {
               )}
             </div>
             <div className={styles.nutritionContainer}>
-              <h2 className={styles.nutritionTitle}>Nutrition Value</h2>
+              <h2 className={styles.nutritionTitle}>Nutrition value</h2>
               <div className={styles.nutrients}>
                 <div className={styles.nutrient}>Calories: {dishNutrition.calories}</div>
                 <div className={styles.nutrient}>Carbs: {dishNutrition.carbs}</div>
