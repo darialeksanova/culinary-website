@@ -14,6 +14,7 @@ import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeMod
 import { API_URL, API_KEY } from 'constants/index';
 import { RecipeFull } from 'types/recipeFull';
 import { DishNutrition } from 'types/dishNutrition';
+import { DishIngredients } from 'types/dishIngredients';
 import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
 
 const RecipePage = () => {
@@ -25,6 +26,7 @@ const RecipePage = () => {
   const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
   const [fullRecipe, setFullRecipe] = useState<RecipeFull | null>(null);
   const [dishNutrition, setDishNutrition] = useState<DishNutrition | null>(null);
+  const [dishIngredients, setDishIngredients] = useState<DishIngredients | null>(null);
   
   useEffect(() => {
     if (params.recipeId) {
@@ -44,11 +46,20 @@ const RecipePage = () => {
             }
 
             throw new Error('Error on dish nutrients fetch!');
-          })
+          }),
+        fetch(`${API_URL}/recipes/${params.recipeId}/ingredientWidget.json?apiKey=${API_KEY}`)
+          .then(response => {
+            if(response.ok) {
+              return response.json();
+            }
+
+            throw new Error('Error on dish ingredients fetch!');
+        }),
       ])
-        .then(([fullRecipeObj, dishNutrition]) => {
+        .then(([fullRecipeObj, dishNutrition, dishIngredients]) => {
           setFullRecipe(fullRecipeObj);
           setDishNutrition(dishNutrition);
+          setDishIngredients(dishIngredients);
         })
         .catch((_error: Error) => {
           console.log('Source is not reachable!');
@@ -123,21 +134,31 @@ const RecipePage = () => {
             <div className={styles.recipeFullDescription}>
             <div className={styles.recipeSummary} dangerouslySetInnerHTML={{__html: fullRecipe.summary}}></div>
             </div>
-            <h2 className={styles.recipeInstructionsTitle}>How to cook?</h2>
-            {(fullRecipe.analyzedInstructions.length !== 0) ? (
-              <>
-                <div className={styles.recipeInstructions}>{fullRecipe.analyzedInstructions[0].steps.map((step, index) => {
-                  return (
-                    <React.Fragment key={index}> 
-                      <h4 className={styles.stepNumber}>Step {index + 1}</h4>
-                      <div className={styles.step}>{step.step}</div>
-                    </React.Fragment>
-                  )})}
-                </div>
-              </>
-            ) : 
-              <div className={styles.noInstructionsMessage}>Unfortunately, there is no step-by-step recipe for this dish yet :c</div>
-            }
+            <div className={styles.recipeIngredientsContainer}>
+              <h2 className={styles.recipeIngredientsTitle}>Ingredients</h2>
+              <ul className={styles.recipeIngredientsList}>
+                {dishIngredients?.ingredients.map((ingredient, index) =>
+                  <li key={index}>{ingredient.name}: {ingredient.amount.metric.value}{ingredient.amount.metric.unit}</li>
+                )}
+              </ul>
+            </div>
+            <div className={styles.recipeInstructionsContainer}>
+              <h2 className={styles.recipeInstructionsTitle}>How to cook?</h2>
+              {(fullRecipe.analyzedInstructions.length !== 0) ? (
+                <>
+                  <div className={styles.recipeInstructions}>{fullRecipe.analyzedInstructions[0].steps.map((step, index) => {
+                    return (
+                      <React.Fragment key={index}> 
+                        <h4 className={styles.stepNumber}>Step {index + 1}</h4>
+                        <div className={styles.step}>{step.step}</div>
+                      </React.Fragment>
+                    )})}
+                  </div>
+                </>
+              ) : 
+                <div className={styles.noInstructionsMessage}>Unfortunately, there is no step-by-step recipe for this dish yet :c</div>
+              }
+            </div>
             <NavLink to={`/recipes`} className={styles.linkToSearchResults}>
               <button className={styles.backToSearchResultsButton}>Back to search results</button>
             </NavLink>

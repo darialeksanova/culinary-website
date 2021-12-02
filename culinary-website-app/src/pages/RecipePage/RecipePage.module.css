@@ -82,8 +82,19 @@
   color: inherit;
 }
 
+.recipeIngredientsList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  justify-items: left;
+  gap: 0 60px;
+  list-style: circle;
+  padding-left: 0;
+  font-size: 18px;
+}
+
 .recipeInstructionsTitle {
-  margin: 60px 0 50px 0;
+  margin: 40px 0 20px 0;
 }
 
 .recipeInstructions {
