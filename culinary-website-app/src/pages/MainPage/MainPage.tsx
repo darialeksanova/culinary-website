@@ -50,11 +50,10 @@ const MainPage = () => {
       })
       .then(recipesFound => {
         recipesSearchedByIngredients = recipesFound;
-        console.log(recipesSearchedByIngredients)
         setSearchResults([...recipesSearchedByTitle, ...recipesSearchedByIngredients]);
       })
       .catch((error: Error) => {
-        console.log('Unable to search by ingredients!', error);
+        console.log('Unable to search by ingredients!');
         setSearchResults(recipesSearchedByTitle);
       });
   };
