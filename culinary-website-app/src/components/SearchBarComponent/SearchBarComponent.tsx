@@ -1,6 +1,6 @@
 import styles from './SearchBarComponent.module.css';
 import SearchFilterComponent from 'components/SearchFilterComponent';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
@@ -14,7 +14,7 @@ type Props = {
 const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSubmitButtonClick }: Props) => {
   const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false);
 
-  const handleFilterButtonClick = () => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true);
+  const handleFilterButtonClick = useCallback(() => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true), [isSearchFilterOpen]);
 
   return (
     <div className={styles.searchBarComponent}>

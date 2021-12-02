@@ -1,7 +1,7 @@
 import Loader from 'components/Loader';
 import RecipePreviewComponent from 'components/RecipePreviewComponent/RecipePreviewComponent';
 import SearchBarComponent from 'components/SearchBarComponent';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { loadRecipesPreviews } from 'store/recipesPreviews/actions';
@@ -33,11 +33,11 @@ const MainPage = () => {
     dispatch(loadRecipesPreviews());
   }, [dispatch]);
 
-  const handleSearchBarValueChange = (newValue: string) => {
+  const handleSearchBarValueChange = useCallback((newValue: string) => {
     setSearchBarValue(newValue);
-  };
+  }, []);
 
-  const searchRecipes = (searchBarValue: string) => {
+  const searchRecipes = useCallback((searchBarValue: string) => {
     const recipesSearchedByTitle = recipesPreviewsList.filter(recipe => recipe.title.toLowerCase().includes(searchBarValue.toLowerCase()));
     let recipesSearchedByIngredients: RecipePreview[]; 
     fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchBarValue}`)
@@ -52,13 +52,13 @@ const MainPage = () => {
         recipesSearchedByIngredients = recipesFound;
         setSearchResults([...recipesSearchedByTitle, ...recipesSearchedByIngredients]);
       })
-      .catch((error: Error) => {
+      .catch((_error: Error) => {
         console.log('Unable to search by ingredients!');
         setSearchResults(recipesSearchedByTitle);
       });
-  };
+  }, [recipesPreviewsList]);
 
-  const handleShowMoreButtonClick = () => {
+  const handleShowMoreButtonClick = useCallback(() => {
     const query = new URLSearchParams(location.search);
     const totalRecipes = query.get('totalRecipes') || '5';
     const newTotalRecipes = parseInt(totalRecipes, 10) + 5;
@@ -67,7 +67,7 @@ const MainPage = () => {
     navigate(`${location.pathname}?${query.toString()}`);
 
     setVisibleRecipesAmount(prevState => prevState + 5);
-  };
+  }, [location.pathname, location.search, navigate]);
 
   return (
     <>
