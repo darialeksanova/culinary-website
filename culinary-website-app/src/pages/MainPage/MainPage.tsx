@@ -9,6 +9,7 @@ import { RootState } from 'store/store';
 import { RecipePreview } from 'types/recipePreview';
 import styles from './MainPage.module.css';
 import classNames from 'classnames/bind';
+import { API_URL, API_KEY } from 'constants/index';
 
 const cx = classNames.bind(styles);
 
@@ -37,8 +38,25 @@ const MainPage = () => {
   };
 
   const searchRecipes = (searchBarValue: string) => {
-    const filteredRecipes = recipesPreviewsList.filter(recipe => recipe.title.toLowerCase().includes(searchBarValue.toLowerCase()));
-    setSearchResults(filteredRecipes);
+    const recipesSearchedByTitle = recipesPreviewsList.filter(recipe => recipe.title.toLowerCase().includes(searchBarValue.toLowerCase()));
+    let recipesSearchedByIngredients: RecipePreview[]; 
+    fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchBarValue}`)
+      .then(response => {
+        if(response.ok) {
+          return response.json();
+        }
+
+        throw new Error('Error on dish ingredients fetch!');
+      })
+      .then(recipesFound => {
+        recipesSearchedByIngredients = recipesFound;
+        console.log(recipesSearchedByIngredients)
+        setSearchResults([...recipesSearchedByTitle, ...recipesSearchedByIngredients]);
+      })
+      .catch((error: Error) => {
+        console.log('Unable to search by ingredients!', error);
+        setSearchResults(recipesSearchedByTitle);
+      });
   };
 
   const handleShowMoreButtonClick = () => {

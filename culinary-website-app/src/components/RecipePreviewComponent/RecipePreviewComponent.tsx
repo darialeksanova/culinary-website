@@ -38,7 +38,7 @@ const RecipePreviewComponent = ({ recipePreview, isFavourite }: Props) => {
           <img className={styles.recipeImage} src={recipePreview.image} alt='dish'></img>
         </div>
         <div className={styles.recipeContent}>
-            <h3 className={styles.recipeTitle}>{recipePreview.title}</h3>
+            <h3 className={styles.recipeTitle}>{recipePreview.title[0].toUpperCase()}{recipePreview.title.slice(1).toLowerCase()}</h3>
             <div className={styles.recipeActions}>
               {!isFavourite && 
                 <MyRecipeBookButton 

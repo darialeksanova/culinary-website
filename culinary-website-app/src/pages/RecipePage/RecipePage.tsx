@@ -97,7 +97,7 @@ const RecipePage = () => {
                 {fullRecipe.servings}
               </div>
               <div className={styles.shortDescriptionItem}>
-                <img className={styles.servingsIcon} src={cookingTimeIcon} alt='servings'></img>
+                <img className={styles.cookingTimeIcon} src={cookingTimeIcon} alt='ready-in-minutes'></img>
                 {fullRecipe.readyInMinutes} min
               </div>
               {!isRecipeFavourite && 
@@ -138,7 +138,7 @@ const RecipePage = () => {
               <h2 className={styles.recipeIngredientsTitle}>Ingredients</h2>
               <ul className={styles.recipeIngredientsList}>
                 {dishIngredients?.ingredients.map((ingredient, index) =>
-                  <li key={index}>{ingredient.name}: {ingredient.amount.metric.value}{ingredient.amount.metric.unit}</li>
+                  <li key={index}>{ingredient.name}: {ingredient.amount.metric.value} {ingredient.amount.metric.unit}</li>
                 )}
               </ul>
             </div>
