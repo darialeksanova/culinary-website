@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router';
@@ -68,15 +68,15 @@ const RecipePage = () => {
     };
 }, [dispatch, params, navigate]);
 
-  const handleAddToMyRecipeBookButtonClick = (fullRecipe: RecipeFull) => {
+  const handleAddToMyRecipeBookButtonClick = useCallback((fullRecipe: RecipeFull) => {
     if (params.recipeId) {
       dispatch(addRecipeToFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
     };
-  };
+  }, [dispatch, params.recipeId]);
 
-  const openConfirmDeleteRecipeModal = () => {
+  const openConfirmDeleteRecipeModal = useCallback(() => {
     setIsConfirmRecipeDeleteModalVisible(true);
-  };
+  }, []);
 
   return (
     <>

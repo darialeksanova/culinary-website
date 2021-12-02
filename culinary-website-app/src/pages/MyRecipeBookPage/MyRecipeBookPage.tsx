@@ -1,5 +1,5 @@
 import RecipePreviewComponent from 'components/RecipePreviewComponent';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { RootState } from 'store/store';
@@ -15,7 +15,7 @@ const MyRecipeBookPage = () => {
 
   const [visibleRecipesAmount, setVisibleRecipesAmount] = useState(Number(totalRecipes));
 
-  const handleShowMoreButtonClick = () => {
+  const handleShowMoreButtonClick = useCallback(() => {
     const query = new URLSearchParams(location.search);
     const totalRecipes = query.get('totalRecipes') || '5';
     const newTotalRecipes = parseInt(totalRecipes, 10) + 5;
@@ -24,7 +24,7 @@ const MyRecipeBookPage = () => {
     navigate(`${location.pathname}?${query.toString()}`);
 
     setVisibleRecipesAmount(prevState => prevState + 5);
-  };
+  }, [location.pathname, location.search, navigate]);
 
   return (
     <div className={styles.favouritesPageContainer}>

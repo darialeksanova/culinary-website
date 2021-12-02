@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
 import { RecipePreview } from 'types/recipePreview';
 import styles from './RecipePreviewComponent.module.css';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
 import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
 
@@ -17,13 +17,13 @@ const RecipePreviewComponent = ({ recipePreview, isFavourite }: Props) => {
   const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const handleAddToMyRecipeBookButtonClick = () => {
+  const handleAddToMyRecipeBookButtonClick = useCallback(() => {
     dispatch(addRecipeToFavourites(recipePreview));
-  };
+  }, [dispatch, recipePreview]);
 
-  const openConfirmDeleteRecipeModal = () => {
+  const openConfirmDeleteRecipeModal = useCallback(() => {
     setIsConfirmRecipeDeleteModalVisible(true);
-  };
+  }, []);
 
   return ( 
     <>

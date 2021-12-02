@@ -6,6 +6,7 @@ import { RecipePreview } from 'types/recipePreview';
 import { Theme } from 'types/theme';
 import { RootState } from 'store/store';
 import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
+import { useCallback } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -18,10 +19,10 @@ const ConfirmDeleteRecipeModalComponent = ({ recipePreview, closeModal }: Props)
   const theme = useSelector((state: RootState) => state.theme.theme);
   const dispatch = useDispatch();
 
-  const handleDeleteFromMyRecipeBookButtonClick = () => {
+  const handleDeleteFromMyRecipeBookButtonClick = useCallback(() => {
     dispatch(deleteRecipeFromFavourites(recipePreview));
     closeModal();
-  };
+  }, [closeModal, recipePreview, dispatch]);
 
   return (
     <div className={styles.overlay}>
