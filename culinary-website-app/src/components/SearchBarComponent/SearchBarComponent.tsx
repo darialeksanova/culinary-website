@@ -1,6 +1,9 @@
 import styles from './SearchBarComponent.module.css';
 import SearchFilterComponent from 'components/SearchFilterComponent';
 import { useState } from 'react';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 type Props = {
   searchBarValue: string;
@@ -10,6 +13,8 @@ type Props = {
 
 const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSubmitButtonClick }: Props) => {
   const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false);
+
+  const handleFilterButtonClick = () => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true);
 
   return (
     <div className={styles.searchBarComponent}>
@@ -23,9 +28,11 @@ const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSu
       >
       </input>
       <button 
-        className={styles.searchFilterButton} 
-        disabled={isSearchFilterOpen} 
-        onClick={() => setIsSearchFilterOpen(true)}
+        className={cx({
+          searchFilterButton: true,
+          searchFilterButtonClicked: isSearchFilterOpen,
+        })}
+        onClick={handleFilterButtonClick}
       >
         Filter
       </button>
