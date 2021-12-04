@@ -63,7 +63,7 @@ const RecipePage = () => {
         })
         .catch((_error: Error) => {
           console.log('Source is not reachable!');
-          navigate('/page-not-found');
+          navigate('/page-not-found', { replace: true });
         });
     };
 }, [dispatch, params, navigate]);
