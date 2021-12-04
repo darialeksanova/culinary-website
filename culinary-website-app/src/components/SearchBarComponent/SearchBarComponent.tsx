@@ -2,16 +2,19 @@ import styles from './SearchBarComponent.module.css';
 import SearchFilterComponent from 'components/SearchFilterComponent';
 import { useCallback, useState } from 'react';
 import classNames from 'classnames/bind';
+import { SearchFilterValues } from 'types/searchFilter';
 
 const cx = classNames.bind(styles);
 
 type Props = {
   searchBarValue: string;
+  searchFilterValues: SearchFilterValues;
+  setSearchFilterValues: (filterValues: SearchFilterValues) => void;
   onSearchBarValueChange: (newValue: string) => void;
   onSearchSubmitButtonClick: (searchBarValue: string) => void;
 };
 
-const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSubmitButtonClick }: Props) => {
+const SearchBarComponent = ({ searchBarValue, searchFilterValues, setSearchFilterValues, onSearchBarValueChange, onSearchSubmitButtonClick }: Props) => {
   const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false);
 
   const handleFilterButtonClick = useCallback(() => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true), [isSearchFilterOpen]);
@@ -40,7 +43,7 @@ const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSu
     </div>
     {isSearchFilterOpen && (
       <>
-        <SearchFilterComponent />
+        <SearchFilterComponent setSearchFilterValues={setSearchFilterValues} searchFilterValues={searchFilterValues}/>
       </>
     )}
     </div>

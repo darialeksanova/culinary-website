@@ -25,7 +25,7 @@ const setError = (error: Error): LoadRecipesPreviewsFailureAction => {
 
 export const loadRecipesPreviews = () => (dispatch: Dispatch) => {
   dispatch(startRecipesPreviewLoading());
-  fetch(`${API_URL}/recipes/complexSearch?apiKey=${API_KEY}&number=200`)
+  fetch(`${API_URL}/recipes/complexSearch?apiKey=${API_KEY}&number=2000`)
   .then(response => {
     if(response.ok) {
       return response.json();
@@ -34,6 +34,7 @@ export const loadRecipesPreviews = () => (dispatch: Dispatch) => {
     throw new Error('Error on recipe preview items fetch!');
   })
   .then((recipePreviewItemsObj: {results: RecipePreview[]}) => {
+    console.log({ recipePreviewItemsObj });
     dispatch(setRecipesPreviews(recipePreviewItemsObj['results']))
   })
   .catch((error: Error) => {
