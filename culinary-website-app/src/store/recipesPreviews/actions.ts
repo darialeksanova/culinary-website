@@ -34,7 +34,6 @@ export const loadRecipesPreviews = () => (dispatch: Dispatch) => {
     throw new Error('Error on recipe preview items fetch!');
   })
   .then((recipePreviewItemsObj: {results: RecipePreview[]}) => {
-    console.log({ recipePreviewItemsObj });
     dispatch(setRecipesPreviews(recipePreviewItemsObj['results']))
   })
   .catch((error: Error) => {
