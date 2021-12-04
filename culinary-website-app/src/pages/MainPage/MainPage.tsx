@@ -7,9 +7,11 @@ import { useLocation, useNavigate } from 'react-router';
 import { loadRecipesPreviews } from 'store/recipesPreviews/actions';
 import { RootState } from 'store/store';
 import { RecipePreview } from 'types/recipePreview';
+import { SearchFilterValues } from 'types/searchFilter';
 import styles from './MainPage.module.css';
 import classNames from 'classnames/bind';
 import { API_URL, API_KEY } from 'constants/index';
+import { PaginatedSearchResults } from 'types/paginatedSearchResults';
 
 const cx = classNames.bind(styles);
 
@@ -27,7 +29,13 @@ const MainPage = () => {
 
   const [visibleRecipesAmount, setVisibleRecipesAmount] = useState(Number(totalRecipes));
   const [searchBarValue, setSearchBarValue] = useState('');
-  const [searchResults, setSearchResults] = useState<RecipePreview[] | null>(null);
+  const [searchResults, setSearchResults] = useState<RecipePreview[]>([]);
+  const [searchFilterValues, setSearchFilterValues] = useState<SearchFilterValues>({
+    isVegetarian: false,
+    isVegan: false,
+    isGlutenFree: false,
+    isDairyFree: false,
+  });
 
   useEffect(() => {
     dispatch(loadRecipesPreviews());
@@ -37,26 +45,79 @@ const MainPage = () => {
     setSearchBarValue(newValue);
   }, []);
 
-  const searchRecipes = useCallback((searchBarValue: string) => {
-    const recipesSearchedByTitle = recipesPreviewsList.filter(recipe => recipe.title.toLowerCase().includes(searchBarValue.toLowerCase()));
-    let recipesSearchedByIngredients: RecipePreview[]; 
-    fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchBarValue}`)
-      .then(response => {
-        if(response.ok) {
-          return response.json();
-        }
+  const getDietFilterValues = (searchFilterValues: SearchFilterValues): string[] => {
+    const dietFilterValues = [];
 
-        throw new Error('Error on dish ingredients fetch!');
-      })
-      .then(recipesFound => {
-        recipesSearchedByIngredients = recipesFound;
-        setSearchResults([...recipesSearchedByTitle, ...recipesSearchedByIngredients]);
-      })
-      .catch((_error: Error) => {
-        console.log('Unable to search by ingredients!');
-        setSearchResults(recipesSearchedByTitle);
-      });
-  }, [recipesPreviewsList]);
+    if (searchFilterValues.isVegetarian) {
+      dietFilterValues.push('Vegetarian');
+    }
+
+    if (searchFilterValues.isVegan) {
+      dietFilterValues.push('Vegan');
+    }
+
+    if (searchFilterValues.isGlutenFree) {
+      dietFilterValues.push('Gluten Free');
+    }
+
+    return dietFilterValues;
+  };
+
+  const composeURLSearchParams = useCallback((searchFilterValues: SearchFilterValues, searchBarValue: string) => {
+    const dietFilterValues = getDietFilterValues(searchFilterValues);
+    const complexSearchURLParams: { [key: string]: string } = {
+      apiKey: API_KEY,
+      number: '100',
+    };
+
+    if (dietFilterValues.length !== 0) {
+      complexSearchURLParams.diet = dietFilterValues.join(',');
+    }
+
+    if (searchFilterValues.isDairyFree) {
+      complexSearchURLParams.intolerances = 'Dairy';
+    }
+
+    if (searchBarValue !== '') {
+      complexSearchURLParams.titleMatch = searchBarValue.toLowerCase();
+    }
+
+    return Object.entries(complexSearchURLParams).map(([paramKey, paramValue]) => `${paramKey}=${paramValue}`).join('&');
+  }, []);
+
+  const searchRecipes = useCallback((searchBarValue: string) => {
+    Promise.all([
+      fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchBarValue}&number=100`)
+        .then(response => {
+          if(response.ok) {
+            return response.json() as Promise<RecipePreview[]>;
+          }
+
+          throw new Error('Error on dish ingredients fetch!');
+        }),
+      fetch(`${API_URL}/recipes/complexSearch?${composeURLSearchParams(searchFilterValues, searchBarValue)}`)
+        .then(response => {
+          if(response.ok) {
+            return response.json() as Promise<PaginatedSearchResults<RecipePreview>>;
+          }
+
+          throw new Error('Error on dish ingredients fetch!');
+        }), 
+      ])
+        .then(([ foundByIngredients, foundByOtherConditions ]) => {
+          let searchResult = [...foundByOtherConditions.results];
+
+          if (foundByIngredients.length !== 0) {
+            searchResult = foundByOtherConditions.results.filter(recipePreview => foundByIngredients.find((recipe) => recipe.id === recipePreview.id));
+          }
+
+          setSearchResults(searchResult);
+        })
+        .catch((error: Error) => {
+          console.log('Unable to search with filters!', { error });
+          setSearchResults([]);
+        });
+  }, [searchFilterValues, composeURLSearchParams]);
 
   const handleShowMoreButtonClick = useCallback(() => {
     const query = new URLSearchParams(location.search);
@@ -74,31 +135,37 @@ const MainPage = () => {
       {!areRecipePreviewsLoaded ? 
         <Loader /> : (
           <div className={styles.mainPageContainer}>
-            <SearchBarComponent searchBarValue={searchBarValue} onSearchBarValueChange={handleSearchBarValueChange} onSearchSubmitButtonClick={searchRecipes}/>
+            <SearchBarComponent 
+              searchBarValue={searchBarValue} 
+              searchFilterValues={searchFilterValues}
+              setSearchFilterValues={setSearchFilterValues}
+              onSearchBarValueChange={handleSearchBarValueChange} 
+              onSearchSubmitButtonClick={searchRecipes}
+            />
             <h1 className={styles.mainPageTitle}>Recipes</h1>
             <ul className={styles.recipesList}>
-              {((searchResults === null) || searchBarValue === '') && (
+              {(searchBarValue === '' && searchResults.length === 0) && (
                 recipesPreviewsList.slice(0, visibleRecipesAmount).map(recipe =>
                   favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === recipe.id) ?
                   <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={true}/> :
                   <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={false}/>
                 )
               )}
-              {(searchResults !== null && searchResults.length !== 0) && (
+              {(searchResults.length !== 0) && (
                 searchResults.slice(0, visibleRecipesAmount).map(recipe =>
                   favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === recipe.id) ?
                   <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={true}/> :
                   <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={false}/>
                 )
               )}
-              {(searchResults !== null && searchResults.length === 0 && searchBarValue !== '') && 
+              {(searchResults.length === 0 && searchBarValue !== '') && 
                 <h2 className={styles.noResultsTitle}>No results found!</h2>
               }
             </ul>
             <div className={styles.mainPageActions}>
               <button className={cx({
                 showMoreButton: true,
-                showMoreButtonHidden: searchResults !== null && searchResults.length === 0 && searchBarValue !== '',
+                showMoreButtonHidden: searchResults.length === 0 && searchBarValue !== '',
                 })} 
                 onClick={handleShowMoreButtonClick}
               >

@@ -54,9 +54,9 @@ const RecipePage = () => {
             }
 
             throw new Error('Error on dish ingredients fetch!');
-        }),
+          }),
       ])
-        .then(([fullRecipeObj, dishNutrition, dishIngredients]) => {
+        .then(([ fullRecipeObj, dishNutrition, dishIngredients ]) => {
           setFullRecipe(fullRecipeObj);
           setDishNutrition(dishNutrition);
           setDishIngredients(dishIngredients);

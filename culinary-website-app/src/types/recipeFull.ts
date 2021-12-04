@@ -6,10 +6,6 @@ export type RecipeFull = {
   image: string;
   summary: string;
   analyzedInstructions: Instructions[] | [];
-  vegetarian: boolean;
-  vegan: boolean;
-  glutenFree: boolean;
-  dairyFree: boolean;
 };
 
 type Instructions = {
