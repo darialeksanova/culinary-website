@@ -14,6 +14,8 @@ import { API_URL, API_KEY } from 'constants/index';
 import { PaginatedSearchResults } from 'types/paginatedSearchResults';
 
 const cx = classNames.bind(styles);
+const RECIPES_TO_SHOW_DELTA = 10;
+const RECIPES_TO_SHOW_INITIAL = 10;
 
 const MainPage = () => {
   const recipesPreviewsList = useSelector((state: RootState) => state.recipesPreviews.recipesPreviews);
@@ -25,7 +27,7 @@ const MainPage = () => {
   const dispatch = useDispatch();
 
   const query = new URLSearchParams(location.search);
-  const totalRecipes = query.get('totalRecipes') || '5';
+  const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
 
   const [visibleRecipesAmount, setVisibleRecipesAmount] = useState(Number(totalRecipes));
   const [searchBarValue, setSearchBarValue] = useState('');
@@ -121,13 +123,13 @@ const MainPage = () => {
 
   const handleShowMoreButtonClick = useCallback(() => {
     const query = new URLSearchParams(location.search);
-    const totalRecipes = query.get('totalRecipes') || '5';
-    const newTotalRecipes = parseInt(totalRecipes, 10) + 5;
+    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
+    const newTotalRecipes = parseInt(totalRecipes, 10) + RECIPES_TO_SHOW_DELTA;
     query.set('totalRecipes', newTotalRecipes.toString());
 
     navigate(`${location.pathname}?${query.toString()}`);
 
-    setVisibleRecipesAmount(prevState => prevState + 5);
+    setVisibleRecipesAmount(prevState => prevState + RECIPES_TO_SHOW_DELTA);
   }, [location.pathname, location.search, navigate]);
 
   return (
