@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router';
 import { RootState } from 'store/store';
 import styles from './RecipePage.module.css';
@@ -21,8 +20,10 @@ const RecipePage = () => {
   const params = useParams<'recipeId'>();
   const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
   const isRecipeFavourite = Boolean(favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
   const [fullRecipe, setFullRecipe] = useState<RecipeFull | null>(null);
   const [dishNutrition, setDishNutrition] = useState<DishNutrition | null>(null);
@@ -74,10 +75,6 @@ const RecipePage = () => {
     };
   }, [dispatch, params.recipeId]);
 
-  const openConfirmDeleteRecipeModal = useCallback(() => {
-    setIsConfirmRecipeDeleteModalVisible(true);
-  }, []);
-
   return (
     <>
       {(isConfirmRecipeDeleteModalVisible && fullRecipe) &&
@@ -115,7 +112,7 @@ const RecipePage = () => {
                  purpose='deleteButton'
                  icon={bin}
                  specialButton
-                 onClick={openConfirmDeleteRecipeModal}
+                 onClick={() => setIsConfirmRecipeDeleteModalVisible(true)}
                />
               )}
             </div>
@@ -159,9 +156,9 @@ const RecipePage = () => {
                 <div className={styles.noInstructionsMessage}>Unfortunately, there is no step-by-step recipe for this dish yet :c</div>
               }
             </div>
-            <NavLink to={`/recipes`} className={styles.linkToSearchResults}>
-              <button className={styles.backToSearchResultsButton}>Back to search results</button>
-            </NavLink>
+            <div className={styles.linkToSearchResults}>
+              <button className={styles.backToSearchResultsButton} onClick={() => navigate(-1)}>Back to search results</button>
+            </div>
           </div>
         </div>
         )
