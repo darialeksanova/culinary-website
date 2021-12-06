@@ -18,8 +18,8 @@ import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent'
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
-  const favouriteRecipesList = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
-  const isRecipeFavourite = Boolean(favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
+  const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
+  const isRecipeFavourite = Boolean(favouriteRecipes.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
