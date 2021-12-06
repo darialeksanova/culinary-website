@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react';
+import { SyntheticEvent, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './SearchFilterComponent.module.css';
 import { setSearchFilterValues } from 'store/searchFilterValues/actions';
@@ -8,7 +8,7 @@ const SearchFilterComponent = () => {
   const dispatch = useDispatch();
   const searchFilterValues = useSelector((state: RootState) => state.filterValues);
 
-  const handleSearchFilterValuesChange = (event: SyntheticEvent) => {
+  const handleSearchFilterValuesChange = useCallback((event: SyntheticEvent) => {
     const eventTarget = event.target as HTMLInputElement;
     if (eventTarget.value === 'dairy-free') {
       dispatch(setSearchFilterValues({isDairyFree: eventTarget.checked}));
@@ -19,7 +19,7 @@ const SearchFilterComponent = () => {
     } else if (eventTarget.value === 'vegan') {
       dispatch(setSearchFilterValues({isVegan: eventTarget.checked}));
     };
-  };
+  }, [dispatch]);
 
   return (
     <div className={styles.searchFilterContainer}>

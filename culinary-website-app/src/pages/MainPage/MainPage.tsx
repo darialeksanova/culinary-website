@@ -113,12 +113,12 @@ const MainPage = () => {
     updatePageURL(query);
   }, [dispatch, getSearchParamsFromURL, location, updatePageURL]);
 
-  const handleResetButtonClick = () => {
+  const handleResetButtonClick = useCallback(() => {
     const query = new URLSearchParams();
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
     dispatch(clearSearchFilterValues());
     updatePageURL(query);
-  };
+  }, [dispatch, getSearchParamsFromURL, updatePageURL]);
 
   return (
     <>
