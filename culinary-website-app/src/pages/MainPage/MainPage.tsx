@@ -1,5 +1,4 @@
 import Loader from 'components/Loader';
-import RecipePreviewComponent from 'components/RecipePreviewComponent/RecipePreviewComponent';
 import SearchBarComponent from 'components/SearchBarComponent';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +10,7 @@ import styles from './MainPage.module.css';
 import classNames from 'classnames/bind';
 import { SearchParams } from 'types/searchParams';
 import { clearSearchFilterValues } from 'store/searchFilterValues/actions';
+import RecipesContainerComponent from 'components/RecipesContainerComponent';
 
 const cx = classNames.bind(styles);
 const RECIPES_TO_SHOW_DELTA = 10;
@@ -18,7 +18,6 @@ const RECIPES_TO_SHOW_INITIAL = '10';
 
 const MainPage = () => {
   const recipesPreviewsList = useSelector((state: RootState) => state.recipesPreviews.recipesPreviews);
-  const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
   const areRecipePreviewsLoading = useSelector((state: RootState) => state.recipesPreviews.isLoading);
   const searchFilterValues = useSelector((state: RootState) => state.filterValues);
 
@@ -134,16 +133,7 @@ const MainPage = () => {
         {areRecipePreviewsLoading ? 
           <Loader /> : (
             <>
-            <ul className={styles.recipesList}>
-              {recipesPreviewsList.map(recipe =>
-                favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === recipe.id) ?
-                <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={true}/> :
-                <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={false}/>
-              )}
-              {(recipesPreviewsList.length === 0 && searchBarValue !== '') && 
-                <h2 className={styles.noResultsTitle}>No results found!</h2>
-              }
-            </ul>
+            <RecipesContainerComponent searchBarValue={searchBarValue} />
             <div className={styles.mainPageActions}>
               <button className={cx({
                 showMoreButton: true,
