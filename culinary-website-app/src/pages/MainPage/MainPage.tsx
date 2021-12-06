@@ -9,12 +9,12 @@ import { SearchFilterValue } from 'types/searchFilterValue';
 import styles from './MainPage.module.css';
 import classNames from 'classnames/bind';
 import { SearchParams } from 'types/searchParams';
-import { clearSearchFilterValues } from 'store/searchFilterValues/actions';
+import { clearSearchFilterValues, setSearchFilterValues } from 'store/searchFilterValues/actions';
 import RecipesContainerComponent from 'components/RecipesContainerComponent';
 
 const cx = classNames.bind(styles);
 const RECIPES_TO_SHOW_DELTA = 10;
-const RECIPES_TO_SHOW_INITIAL = '10';
+const RECIPES_TO_SHOW_INITIAL = 10;
 
 const MainPage = () => {
   const recipesPreviewsList = useSelector(( state: RootState ) => state.recipesPreviews.recipesPreviews);
@@ -31,7 +31,7 @@ const MainPage = () => {
 
   const getSearchParamsFromURL = useCallback(( query: URLSearchParams ): SearchParams => {
     const searchInput = query.get('searchInput') || '';
-    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
+    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
     const filtersAsString = query.get('filters') || '';
     const filtersAsArray = filtersAsString.split(',');
     const filtersAsObj: SearchFilterValue = {
@@ -49,7 +49,10 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
+    const searchParams = getSearchParamsFromURL(query);
+    dispatch(loadRecipesPreviews(searchParams));
+    dispatch(setSearchFilterValues(searchParams.filters));
+    setSearchBarValue(searchParams.searchInput);
   }, [ dispatch, query, getSearchParamsFromURL ]);
 
   const handleSearchBarValueChange = useCallback(( newValue: string ): void => {
@@ -84,7 +87,7 @@ const MainPage = () => {
 
   const searchRecipes = useCallback(( searchBarValue: string ): void => {
     const query = new URLSearchParams(location.search);
-    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
+    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
     const filtersAsString = composeStringFromFilters(searchFilterValues);
 
     query.set('totalRecipes', totalRecipes);
@@ -104,7 +107,7 @@ const MainPage = () => {
 
   const handleShowMoreButtonClick = useCallback((): void => {
     const query = new URLSearchParams(location.search);
-    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
+    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
     const newTotalRecipes = parseInt(totalRecipes, 10) + RECIPES_TO_SHOW_DELTA;
 
     query.set('totalRecipes', newTotalRecipes.toString());
