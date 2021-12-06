@@ -8,28 +8,31 @@ const cx = classNames.bind(styles);
 
 type Props = {
   searchBarValue: string;
-  onSearchBarValueChange: (newValue: string) => void;
-  onSearchSubmitButtonClick: (searchBarValue: string) => void;
+  onSearchBarValueChange: ( newValue: string ) => void;
+  onSearchSubmitButtonClick: ( searchBarValue: string ) => void;
   onResetButtonClick: () => void;
 };
 
 const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSubmitButtonClick, onResetButtonClick }: Props) => {
   const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false);
 
-  const handleFilterButtonClick = useCallback((): void => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true), [isSearchFilterOpen]);
+  const handleFilterButtonClick = useCallback(
+    (): void => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true),
+    [ isSearchFilterOpen ]
+  );
 
   return (
     <div className={styles.searchBarComponent}>
     <div className={styles.searchBarContainer}>
+
       <div className={styles.searchInputContainer}>
         <input 
           className={styles.searchInput} 
           type='text' 
           value={searchBarValue}
           placeholder='What do you want to cook today?' 
-          onChange={(event) => onSearchBarValueChange(event.target.value)}
-        >
-        </input>
+          onChange={( event ) => onSearchBarValueChange(event.target.value)}
+        />
         <button 
           className={cx({
             searchFilterButton: true,
@@ -40,18 +43,18 @@ const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSu
           <img className={styles.filterIcon} src={filterIcon} alt='filter'></img>
         </button>
       </div>
+
       <button 
         className={styles.searchBarButton}
         onClick={onResetButtonClick}
-      >
-        Reset
+      >Reset
       </button>
+      
       <button className={styles.searchBarButton} onClick={() => onSearchSubmitButtonClick(searchBarValue)}>Search</button>
     </div>
+    
     {isSearchFilterOpen && (
-      <>
-        <SearchFilterComponent />
-      </>
+      <SearchFilterComponent />
     )}
     </div>
   );

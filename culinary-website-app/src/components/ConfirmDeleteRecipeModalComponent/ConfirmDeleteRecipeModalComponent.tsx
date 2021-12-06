@@ -16,13 +16,13 @@ type Props = {
 };
 
 const ConfirmDeleteRecipeModalComponent = ({ recipePreview, closeModal }: Props) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const theme = useSelector(( state: RootState ) => state.theme.theme);
   const dispatch = useDispatch();
 
   const handleDeleteFromMyRecipeBookButtonClick = useCallback((): void => {
     dispatch(deleteRecipeFromFavourites(recipePreview));
     closeModal();
-  }, [closeModal, recipePreview, dispatch]);
+  }, [ closeModal, recipePreview, dispatch ]);
 
   return (
     <div className={styles.overlay}>
@@ -31,7 +31,9 @@ const ConfirmDeleteRecipeModalComponent = ({ recipePreview, closeModal }: Props)
         modal: true,
         dark: theme === Theme.dark,
       })}>
+
         <h4 className={styles.modalTitle}>Are you sure to delete "{recipePreview.title}" recipe from your recipe book?</h4>
+        
         <div className={styles.modalActions}>
           <MyRecipeBookButtonComponent 
             text='No' 

@@ -11,5 +11,4 @@ export enum FavouriteRecipesAction {
 
 export type GetFavouriteRecipesAction = ActionPayload<FavouriteRecipesAction.LOAD_FAVOURITE_RECIPES, RecipePreview[]>;
 
-export type FavouriteRecipesReducerAction = 
-  | GetFavouriteRecipesAction;
+export type FavouriteRecipesReducerAction = GetFavouriteRecipesAction;

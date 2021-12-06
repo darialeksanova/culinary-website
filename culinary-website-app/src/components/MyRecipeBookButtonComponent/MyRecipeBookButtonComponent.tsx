@@ -15,7 +15,7 @@ type Props = {
 };
 
 const MyRecipeBookButtonComponent = ({ onClick, text, purpose, icon, specialButton }: Props) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const theme = useSelector(( state: RootState ) => state.theme.theme);
 
   return (
     <button 

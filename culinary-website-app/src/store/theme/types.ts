@@ -1,6 +1,10 @@
 import { Action } from "redux";
 import { Theme } from "types/theme";
-import { ThemeAction } from "./actions";
+
+export enum ThemeAction {
+  SET_DARK_THEME = 'set-dark-theme',
+  SET_LIGHT_THEME = 'set-light-theme',
+}
 
 export type ThemeState = {
   theme: Theme;

@@ -19,7 +19,7 @@ const RecipePreviewComponent = ({ recipePreview, isFavourite }: Props) => {
 
   const handleAddToMyRecipeBookButtonClick = useCallback((): void => {
     dispatch(addRecipeToFavourites(recipePreview));
-  }, [dispatch, recipePreview]);
+  }, [ dispatch, recipePreview ]);
 
   const openConfirmDeleteRecipeModal = useCallback((): void => {
     setIsConfirmRecipeDeleteModalVisible(true);
@@ -33,12 +33,16 @@ const RecipePreviewComponent = ({ recipePreview, isFavourite }: Props) => {
           closeModal={() => setIsConfirmRecipeDeleteModalVisible(false)}
         />
       }
+
       <div className={styles.recipePreviewContainer}>
         <div className={styles.recipeImageContainer}>
           <img className={styles.recipeImage} src={recipePreview.image} alt='dish'></img>
         </div>
+
         <div className={styles.recipeContent}>
-            <h3 className={styles.recipeTitle}>{recipePreview.title[0].toUpperCase()}{recipePreview.title.slice(1).toLowerCase()}</h3>
+            <h3 className={styles.recipeTitle}>
+              {recipePreview.title[0].toUpperCase()}{recipePreview.title.slice(1).toLowerCase()}
+            </h3>
             <div className={styles.recipeActions}>
               {!isFavourite && 
                 <MyRecipeBookButtonComponent 
