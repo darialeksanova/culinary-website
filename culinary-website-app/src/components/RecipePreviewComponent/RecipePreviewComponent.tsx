@@ -17,11 +17,11 @@ const RecipePreviewComponent = ({ recipePreview, isFavourite }: Props) => {
   const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const handleAddToMyRecipeBookButtonClick = useCallback(() => {
+  const handleAddToMyRecipeBookButtonClick = useCallback((): void => {
     dispatch(addRecipeToFavourites(recipePreview));
   }, [dispatch, recipePreview]);
 
-  const openConfirmDeleteRecipeModal = useCallback(() => {
+  const openConfirmDeleteRecipeModal = useCallback((): void => {
     setIsConfirmRecipeDeleteModalVisible(true);
   }, []);
 

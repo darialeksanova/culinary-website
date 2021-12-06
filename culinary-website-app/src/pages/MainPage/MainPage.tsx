@@ -52,7 +52,7 @@ const MainPage = () => {
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
   }, [dispatch, query, getSearchParamsFromURL]);
 
-  const handleSearchBarValueChange = useCallback((newValue: string) => {
+  const handleSearchBarValueChange = useCallback((newValue: string): void => {
     setSearchBarValue(newValue);
   }, []);
 
@@ -78,11 +78,11 @@ const MainPage = () => {
     return filtersAsArray.join(',');
   }, []);
 
-  const updatePageURL = useCallback((query: URLSearchParams) => {
+  const updatePageURL = useCallback((query: URLSearchParams): void => {
     navigate(`${location.pathname}?${query.toString()}`);
   }, [location, navigate]);
 
-  const searchRecipes = useCallback((searchBarValue: string) => {
+  const searchRecipes = useCallback((searchBarValue: string): void => {
     const query = new URLSearchParams(location.search);
     const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
     const filtersAsString = composeStringFromFilters(searchFilterValues);
@@ -102,7 +102,7 @@ const MainPage = () => {
   }, [dispatch, searchFilterValues, location, composeStringFromFilters, updatePageURL, getSearchParamsFromURL]);
 
 
-  const handleShowMoreButtonClick = useCallback(() => {
+  const handleShowMoreButtonClick = useCallback((): void => {
     const query = new URLSearchParams(location.search);
     const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
     const newTotalRecipes = parseInt(totalRecipes, 10) + RECIPES_TO_SHOW_DELTA;
@@ -113,7 +113,7 @@ const MainPage = () => {
     updatePageURL(query);
   }, [dispatch, getSearchParamsFromURL, location, updatePageURL]);
 
-  const handleResetButtonClick = useCallback(() => {
+  const handleResetButtonClick = useCallback((): void => {
     const query = new URLSearchParams();
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
     dispatch(clearSearchFilterValues());

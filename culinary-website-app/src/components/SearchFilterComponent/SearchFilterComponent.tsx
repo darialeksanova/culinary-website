@@ -8,7 +8,7 @@ const SearchFilterComponent = () => {
   const dispatch = useDispatch();
   const searchFilterValues = useSelector((state: RootState) => state.filterValues);
 
-  const handleSearchFilterValuesChange = useCallback((event: SyntheticEvent) => {
+  const handleSearchFilterValuesChange = useCallback((event: SyntheticEvent): void => {
     const eventTarget = event.target as HTMLInputElement;
     if (eventTarget.value === 'dairy-free') {
       dispatch(setSearchFilterValues({isDairyFree: eventTarget.checked}));

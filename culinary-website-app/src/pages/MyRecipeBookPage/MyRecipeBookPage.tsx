@@ -15,7 +15,7 @@ const MyRecipeBookPage = () => {
 
   const [visibleRecipesAmount, setVisibleRecipesAmount] = useState(Number(totalRecipes));
 
-  const handleShowMoreButtonClick = useCallback(() => {
+  const handleShowMoreButtonClick = useCallback((): void => {
     const query = new URLSearchParams(location.search);
     const totalRecipes = query.get('totalRecipes') || '5';
     const newTotalRecipes = parseInt(totalRecipes, 10) + 5;

@@ -16,7 +16,7 @@ type Props = {
 const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSubmitButtonClick, onResetButtonClick }: Props) => {
   const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false);
 
-  const handleFilterButtonClick = useCallback(() => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true), [isSearchFilterOpen]);
+  const handleFilterButtonClick = useCallback((): void => isSearchFilterOpen? setIsSearchFilterOpen(false) : setIsSearchFilterOpen(true), [isSearchFilterOpen]);
 
   return (
     <div className={styles.searchBarComponent}>

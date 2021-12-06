@@ -69,7 +69,7 @@ const RecipePage = () => {
     };
 }, [dispatch, params, navigate]);
 
-  const handleAddToMyRecipeBookButtonClick = useCallback((fullRecipe: RecipeFull) => {
+  const handleAddToMyRecipeBookButtonClick = useCallback((fullRecipe: RecipeFull): void => {
     if (params.recipeId) {
       dispatch(addRecipeToFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
     };

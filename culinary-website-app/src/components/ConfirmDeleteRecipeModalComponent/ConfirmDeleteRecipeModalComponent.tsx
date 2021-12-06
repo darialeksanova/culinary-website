@@ -19,7 +19,7 @@ const ConfirmDeleteRecipeModalComponent = ({ recipePreview, closeModal }: Props)
   const theme = useSelector((state: RootState) => state.theme.theme);
   const dispatch = useDispatch();
 
-  const handleDeleteFromMyRecipeBookButtonClick = useCallback(() => {
+  const handleDeleteFromMyRecipeBookButtonClick = useCallback((): void => {
     dispatch(deleteRecipeFromFavourites(recipePreview));
     closeModal();
   }, [closeModal, recipePreview, dispatch]);
