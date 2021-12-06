@@ -1,40 +1,42 @@
-import RecipePreviewComponent from 'components/RecipePreviewComponent';
 import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { RootState } from 'store/store';
 import styles from './MyRecipeBookPage.module.css';
+import { RECIPES_TO_SHOW_DELTA, RECIPES_TO_SHOW_INITIAL } from 'constants/index';
+import RecipesContainerComponent from 'components/RecipesContainerComponent';
+import { RecipePreview } from 'types/recipePreview';
 
 const MyRecipeBookPage = () => {
-  const favouriteRecipesList = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
+  const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
   const location = useLocation();
   const navigate = useNavigate();
 
   const query = new URLSearchParams(location.search);
-  const totalRecipes = query.get('totalRecipes') || '5';
+  const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
 
   const [visibleRecipesAmount, setVisibleRecipesAmount] = useState(Number(totalRecipes));
 
   const handleShowMoreButtonClick = useCallback((): void => {
     const query = new URLSearchParams(location.search);
-    const totalRecipes = query.get('totalRecipes') || '5';
-    const newTotalRecipes = parseInt(totalRecipes, 10) + 5;
+    const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
+    const newTotalRecipes = parseInt(totalRecipes, 10) + RECIPES_TO_SHOW_DELTA;
     query.set('totalRecipes', newTotalRecipes.toString());
 
     navigate(`${location.pathname}?${query.toString()}`);
 
-    setVisibleRecipesAmount(prevState => prevState + 5);
+    setVisibleRecipesAmount(prevState => prevState + RECIPES_TO_SHOW_INITIAL);
   }, [location.pathname, location.search, navigate]);
+
+  const addIsFavouriteFieldToEachRecipe = useCallback((favouriteRecipes: RecipePreview[]) => {
+    return favouriteRecipes.map(recipe => ({...recipe, isFavourite: true}))
+  }, []);
 
   return (
     <div className={styles.favouritesPageContainer}>
       <h1 className={styles.favouritesPageTitle}>Your Favourite Recipes</h1>
 
-      <ul className={styles.favouritesList}>
-        {favouriteRecipesList?.slice(0, visibleRecipesAmount).map(favouriteRecipe => 
-          <RecipePreviewComponent key={favouriteRecipe.id} recipePreview={favouriteRecipe} isFavourite={true}/>
-        )}
-      </ul>
+      <RecipesContainerComponent recipes={addIsFavouriteFieldToEachRecipe(favouriteRecipes.slice(0, visibleRecipesAmount))}/>
 
       <div className={styles.favouritesPageActions}>
         <button className={styles.showMoreButton} onClick={handleShowMoreButtonClick}>Show more</button>
