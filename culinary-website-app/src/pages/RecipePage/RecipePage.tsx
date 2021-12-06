@@ -8,13 +8,13 @@ import cookingTimeIcon from 'assets/cookingTimeIcon.png';
 import bookmark from 'assets/bookmark.png';
 import bin from 'assets/bin.png';
 import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
-import Loader from 'components/Loader';
+import LoaderComponent from 'components/LoaderComponent';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
 import { API_URL, API_KEY } from 'constants/index';
 import { RecipeFull } from 'types/recipeFull';
 import { DishNutrition } from 'types/dishNutrition';
 import { DishIngredients } from 'types/dishIngredients';
-import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
+import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent';
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
@@ -83,7 +83,7 @@ const RecipePage = () => {
           closeModal={() => setIsConfirmRecipeDeleteModalVisible(false)}
         />
       }
-      {(!fullRecipe && !dishNutrition) && <Loader />}
+      {(!fullRecipe && !dishNutrition) && <LoaderComponent />}
       {(fullRecipe && dishNutrition) && (
         <div className={styles.recipePage}>
           <h1 className={styles.recipeTitle}>{fullRecipe.title[0].toUpperCase()}{fullRecipe.title.slice(1).toLowerCase()}</h1>
@@ -98,7 +98,7 @@ const RecipePage = () => {
                 {fullRecipe.readyInMinutes} min
               </div>
               {!isRecipeFavourite && 
-                <MyRecipeBookButton 
+                <MyRecipeBookButtonComponent 
                   text='Add to my recipe book' 
                   purpose='addButton' 
                   icon={bookmark}
@@ -107,7 +107,7 @@ const RecipePage = () => {
                 />
               }
               {isRecipeFavourite && (
-                 <MyRecipeBookButton 
+                 <MyRecipeBookButtonComponent 
                  text='Delete from my recipe book'
                  purpose='deleteButton'
                  icon={bin}

@@ -1,6 +1,6 @@
-import styles from './Loader.module.css';
+import styles from './LoaderComponent.module.css';
 
-const Loader = () => {
+const LoaderComponent = () => {
   return (
     <div className={styles.loaderWrapper}>
       <div className={styles.ldsSpinner}><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -8,4 +8,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default LoaderComponent;

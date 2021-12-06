@@ -1,4 +1,4 @@
-import styles from './Header.module.css';
+import styles from './HeaderComponent.module.css';
 import logo from 'assets/logo.png';
 import { NavLink } from 'react-router-dom';
 import sun from 'assets/sun.png';
@@ -11,7 +11,7 @@ type Props = {
   handleThemeSwitch: () => void;
 };
 
-const Header = ({ handleThemeSwitch }: Props) => {
+const HeaderComponent = ({ handleThemeSwitch }: Props) => {
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   return (
@@ -39,4 +39,4 @@ const Header = ({ handleThemeSwitch }: Props) => {
   );
 };
 
-export default Header;
+export default HeaderComponent;

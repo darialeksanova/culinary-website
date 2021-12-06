@@ -1,4 +1,4 @@
-import Loader from 'components/Loader';
+import LoaderComponent from 'components/LoaderComponent';
 import SearchBarComponent from 'components/SearchBarComponent';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -131,7 +131,7 @@ const MainPage = () => {
         />
         <h1 className={styles.mainPageTitle}>Recipes</h1>
         {areRecipePreviewsLoading ? 
-          <Loader /> : (
+          <LoaderComponent /> : (
             <>
             <RecipesContainerComponent searchBarValue={searchBarValue} />
             <div className={styles.mainPageActions}>

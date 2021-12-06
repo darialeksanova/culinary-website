@@ -5,7 +5,7 @@ import { deleteRecipeFromFavourites } from 'store/favouriteRecipes/actions';
 import { RecipePreview } from 'types/recipePreview';
 import { Theme } from 'types/theme';
 import { RootState } from 'store/store';
-import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
+import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent';
 import { useCallback } from 'react';
 
 const cx = classNames.bind(styles);
@@ -33,12 +33,12 @@ const ConfirmDeleteRecipeModalComponent = ({ recipePreview, closeModal }: Props)
       })}>
         <h4 className={styles.modalTitle}>Are you sure to delete "{recipePreview.title}" recipe from your recipe book?</h4>
         <div className={styles.modalActions}>
-          <MyRecipeBookButton 
+          <MyRecipeBookButtonComponent 
             text='No' 
             purpose='noButton' 
             onClick={closeModal} 
           />
-          <MyRecipeBookButton 
+          <MyRecipeBookButtonComponent 
             text='Yes' 
             purpose='yesButton' 
             onClick={handleDeleteFromMyRecipeBookButtonClick} 

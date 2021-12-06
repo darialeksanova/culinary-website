@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './App.module.css';
 import styles from './App.module.css';
-import Header from 'components/Header';
+import HeaderComponent from 'components/HeaderComponent';
 import MainPage from 'pages/MainPage';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NoMatchPage from 'pages/NoMatchPage';
@@ -39,7 +39,7 @@ function App() {
           App: true,
           AppDark: theme === Theme.dark,
         })}>
-        <Header handleThemeSwitch={handleThemeSwitch}/>
+        <HeaderComponent handleThemeSwitch={handleThemeSwitch}/>
         <div className={cx({
           main: true,
           mainDark: theme === Theme.dark,

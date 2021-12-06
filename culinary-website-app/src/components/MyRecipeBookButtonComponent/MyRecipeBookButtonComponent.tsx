@@ -1,4 +1,4 @@
-import styles from './MyRecipeBookButton.module.css';
+import styles from './MyRecipeBookButtonComponent.module.css';
 import classNames from 'classnames/bind';
 import { Theme } from 'types/theme';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ type Props = {
   specialButton?: boolean;
 };
 
-const MyRecipeBookButton = ({ onClick, text, purpose, icon, specialButton }: Props) => {
+const MyRecipeBookButtonComponent = ({ onClick, text, purpose, icon, specialButton }: Props) => {
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   return (
@@ -36,4 +36,4 @@ const MyRecipeBookButton = ({ onClick, text, purpose, icon, specialButton }: Pro
   );
 };
 
-export default MyRecipeBookButton;
+export default MyRecipeBookButtonComponent;
