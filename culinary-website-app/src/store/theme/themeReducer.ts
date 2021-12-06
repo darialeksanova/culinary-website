@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { Theme } from 'types/theme';
-import { ThemeAction } from './actions';
+import { ThemeAction } from './types';
 import { themeReducerAction, ThemeState } from './types';
 
 const InitialState: ThemeState = {

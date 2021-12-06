@@ -12,21 +12,21 @@ const startRecipesPreviewLoading = (): LoadRecipesPreviewsStartedAction => {
   };
 };
 
-const setRecipesPreviews = (recipesPrewiews: RecipePreview[]): LoadRecipesPreviewsSuccessAction => {
+const setRecipesPreviews = ( recipesPrewiews: RecipePreview[] ): LoadRecipesPreviewsSuccessAction => {
   return {
     type: RecipesPreviewsAction.LOAD_RECIPES_PREVIEWS_SUCCESS,
     payload: recipesPrewiews,
   };
 };
 
-const setError = (error: Error): LoadRecipesPreviewsFailureAction => {
+const setError = ( error: Error ): LoadRecipesPreviewsFailureAction => {
   return {
     type: RecipesPreviewsAction.LOAD_RECIPES_PREVIEWS_FAILURE,
     payload: error,
   };
 };
 
-const getDietFilterValues = (searchFilterValues: SearchFilterValue): string[] => {
+const getDietFilterValues = ( searchFilterValues: SearchFilterValue ): string[] => {
   const dietFilterValues = [];
 
   if (searchFilterValues.isVegetarian) {
@@ -44,7 +44,7 @@ const getDietFilterValues = (searchFilterValues: SearchFilterValue): string[] =>
   return dietFilterValues;
 };
 
-const composeURLSearchParams = (searchParams: SearchParams): string => {
+const composeURLSearchParams = ( searchParams: SearchParams ): string => {
   const dietFilterValues = getDietFilterValues(searchParams.filters);
   const complexSearchURLParams: { [key: string]: string } = {
     apiKey: API_KEY,
@@ -62,10 +62,10 @@ const composeURLSearchParams = (searchParams: SearchParams): string => {
     complexSearchURLParams.titleMatch = searchParams.searchInput.toLowerCase();
   }
 
-  return Object.entries(complexSearchURLParams).map(([paramKey, paramValue]) => `${paramKey}=${paramValue}`).join('&');
+  return Object.entries(complexSearchURLParams).map(([ paramKey, paramValue ]) => `${paramKey}=${paramValue}`).join('&');
 };
 
-export const loadRecipesPreviews = (searchParams: SearchParams) => (dispatch: Dispatch) => {
+export const loadRecipesPreviews = ( searchParams: SearchParams ) => ( dispatch: Dispatch ) => {
   dispatch(startRecipesPreviewLoading());
   Promise.all([
     fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchParams.searchInput}&number=100`)
@@ -86,19 +86,18 @@ export const loadRecipesPreviews = (searchParams: SearchParams) => (dispatch: Di
       }),
   ])
   .then(([ foundByIngredients, foundByOtherConditions ]) => {
-    let searchResult = [...foundByOtherConditions.results];
+    let searchResult = [ ...foundByOtherConditions.results ];
 
     if (searchParams.searchInput !== '') {
-      searchResult.filter(
-        recipeByOtherConditions => foundByIngredients.find(
-          recipeByIngredients => recipeByIngredients.id === recipeByOtherConditions.id,
-        ),
-      );
+      searchResult
+        .filter(recipeByOtherConditions => foundByIngredients
+          .find(recipeByIngredients => recipeByIngredients.id === recipeByOtherConditions.id)
+        );
     }
 
     dispatch(setRecipesPreviews(searchResult.slice(0, searchParams.totalRecipes)));
   })
-  .catch((error: Error) => {
+  .catch(( error: Error ) => {
     console.log('Source is not reachable!');
     dispatch(setError(error));
   });

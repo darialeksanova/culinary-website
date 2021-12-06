@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './App.module.css';
 import styles from './App.module.css';
-import Header from 'components/Header';
+import HeaderComponent from 'components/HeaderComponent';
 import MainPage from 'pages/MainPage';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NoMatchPage from 'pages/NoMatchPage';
@@ -18,14 +18,14 @@ const cx = classNames.bind(styles);
 
 function App() {
   const dispatch = useDispatch();
-  const theme = useSelector((state: RootState) => state.theme.theme);
+  const theme = useSelector(( state: RootState ) => state.theme.theme);
 
 
   useEffect(() => {
     dispatch(loadFavouriteRecipesFromLocalStorage());
-  }, [dispatch]);
+  }, [ dispatch ]);
 
-  const handleThemeSwitch = () => {
+  const handleThemeSwitch = (): void => {
     if (theme === Theme.light) {
       dispatch(setDarkTheme());
     } else {
@@ -39,7 +39,9 @@ function App() {
           App: true,
           AppDark: theme === Theme.dark,
         })}>
-        <Header handleThemeSwitch={handleThemeSwitch}/>
+
+        <HeaderComponent handleThemeSwitch={handleThemeSwitch}/>
+
         <div className={cx({
           main: true,
           mainDark: theme === Theme.dark,

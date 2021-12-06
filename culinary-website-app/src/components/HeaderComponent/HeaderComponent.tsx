@@ -1,4 +1,4 @@
-import styles from './Header.module.css';
+import styles from './HeaderComponent.module.css';
 import logo from 'assets/logo.png';
 import { NavLink } from 'react-router-dom';
 import sun from 'assets/sun.png';
@@ -11,18 +11,34 @@ type Props = {
   handleThemeSwitch: () => void;
 };
 
-const Header = ({ handleThemeSwitch }: Props) => {
-  const theme = useSelector((state: RootState) => state.theme.theme);
+const HeaderComponent = ({ handleThemeSwitch }: Props) => {
+  const theme = useSelector(( state: RootState ) => state.theme.theme);
 
   return (
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <img className={styles.logo} src={logo} alt='logo'></img>
       </div>
+
       <ul className={styles.navigation}>
-        <li><NavLink end to='/recipes' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>Home</NavLink></li>
-        <li><NavLink end to='/my-recipe-book' className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}>My recipe book</NavLink></li>
+        <li>
+          <NavLink 
+            end 
+            to='/recipes' 
+            className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}
+          >Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
+            end 
+            to='/my-recipe-book' 
+            className={({ isActive }) => `${styles.navigationLink} ${isActive ? styles.activeLink : ''}`}
+          >My recipe book
+          </NavLink>
+        </li>
       </ul>
+
       <div className={styles.headerActions}>
         {theme === Theme.light &&
           <div className={styles.themeSwitchButton} onClick={handleThemeSwitch}>
@@ -39,4 +55,4 @@ const Header = ({ handleThemeSwitch }: Props) => {
   );
 };
 
-export default Header;
+export default HeaderComponent;

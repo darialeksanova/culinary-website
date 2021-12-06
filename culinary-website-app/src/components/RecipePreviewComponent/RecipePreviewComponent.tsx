@@ -5,7 +5,7 @@ import { RecipePreview } from 'types/recipePreview';
 import styles from './RecipePreviewComponent.module.css';
 import { useCallback, useState } from 'react';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
-import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
+import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent';
 
 
 type Props = {
@@ -17,11 +17,11 @@ const RecipePreviewComponent = ({ recipePreview, isFavourite }: Props) => {
   const [isConfirmRecipeDeleteModalVisible, setIsConfirmRecipeDeleteModalVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const handleAddToMyRecipeBookButtonClick = useCallback(() => {
+  const handleAddToMyRecipeBookButtonClick = useCallback((): void => {
     dispatch(addRecipeToFavourites(recipePreview));
-  }, [dispatch, recipePreview]);
+  }, [ dispatch, recipePreview ]);
 
-  const openConfirmDeleteRecipeModal = useCallback(() => {
+  const openConfirmDeleteRecipeModal = useCallback((): void => {
     setIsConfirmRecipeDeleteModalVisible(true);
   }, []);
 
@@ -33,22 +33,26 @@ const RecipePreviewComponent = ({ recipePreview, isFavourite }: Props) => {
           closeModal={() => setIsConfirmRecipeDeleteModalVisible(false)}
         />
       }
+
       <div className={styles.recipePreviewContainer}>
         <div className={styles.recipeImageContainer}>
           <img className={styles.recipeImage} src={recipePreview.image} alt='dish'></img>
         </div>
+
         <div className={styles.recipeContent}>
-            <h3 className={styles.recipeTitle}>{recipePreview.title[0].toUpperCase()}{recipePreview.title.slice(1).toLowerCase()}</h3>
+            <h3 className={styles.recipeTitle}>
+              {recipePreview.title[0].toUpperCase()}{recipePreview.title.slice(1).toLowerCase()}
+            </h3>
             <div className={styles.recipeActions}>
               {!isFavourite && 
-                <MyRecipeBookButton 
+                <MyRecipeBookButtonComponent 
                   text='Add to my recipe book' 
                   purpose='addButton' 
                   onClick={handleAddToMyRecipeBookButtonClick} 
                 />
               }
               {isFavourite && 
-                <MyRecipeBookButton 
+                <MyRecipeBookButtonComponent 
                   text='Delete from my recipe book'
                   purpose='deleteButton'
                   onClick={openConfirmDeleteRecipeModal}

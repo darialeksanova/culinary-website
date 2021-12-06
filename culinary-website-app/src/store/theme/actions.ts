@@ -1,7 +1,4 @@
-export enum ThemeAction {
-  SET_DARK_THEME = 'set-dark-theme',
-  SET_LIGHT_THEME = 'set-light-theme',
-}
+import { ThemeAction } from "./types";
 
 export const setLightTheme = () => {
   return {

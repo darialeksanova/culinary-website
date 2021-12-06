@@ -1,4 +1,4 @@
-import Loader from 'components/Loader';
+import LoaderComponent from 'components/LoaderComponent';
 import SearchBarComponent from 'components/SearchBarComponent';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,9 +17,9 @@ const RECIPES_TO_SHOW_DELTA = 10;
 const RECIPES_TO_SHOW_INITIAL = '10';
 
 const MainPage = () => {
-  const recipesPreviewsList = useSelector((state: RootState) => state.recipesPreviews.recipesPreviews);
-  const areRecipePreviewsLoading = useSelector((state: RootState) => state.recipesPreviews.isLoading);
-  const searchFilterValues = useSelector((state: RootState) => state.filterValues);
+  const recipesPreviewsList = useSelector(( state: RootState ) => state.recipesPreviews.recipesPreviews);
+  const areRecipePreviewsLoading = useSelector(( state: RootState ) => state.recipesPreviews.isLoading);
+  const searchFilterValues = useSelector(( state: RootState ) => state.filterValues);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -27,9 +27,9 @@ const MainPage = () => {
 
   const [searchBarValue, setSearchBarValue] = useState('');
 
-  const query = useMemo(() => new URLSearchParams(location.search), [location]);
+  const query = useMemo(() => new URLSearchParams(location.search), [ location ]);
 
-  const getSearchParamsFromURL = useCallback((query: URLSearchParams): SearchParams => {
+  const getSearchParamsFromURL = useCallback(( query: URLSearchParams ): SearchParams => {
     const searchInput = query.get('searchInput') || '';
     const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
     const filtersAsString = query.get('filters') || '';
@@ -50,13 +50,13 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
-  }, [dispatch, query, getSearchParamsFromURL]);
+  }, [ dispatch, query, getSearchParamsFromURL ]);
 
-  const handleSearchBarValueChange = useCallback((newValue: string) => {
+  const handleSearchBarValueChange = useCallback(( newValue: string ): void => {
     setSearchBarValue(newValue);
   }, []);
 
-  const composeStringFromFilters = useCallback((filters: SearchFilterValue): string => {
+  const composeStringFromFilters = useCallback(( filters: SearchFilterValue ): string => {
     const filtersAsArray = [];
 
     if (filters.isDairyFree) {
@@ -78,11 +78,11 @@ const MainPage = () => {
     return filtersAsArray.join(',');
   }, []);
 
-  const updatePageURL = useCallback((query: URLSearchParams) => {
+  const updatePageURL = useCallback(( query: URLSearchParams ): void => {
     navigate(`${location.pathname}?${query.toString()}`);
-  }, [location, navigate]);
+  }, [ location, navigate ]);
 
-  const searchRecipes = useCallback((searchBarValue: string) => {
+  const searchRecipes = useCallback(( searchBarValue: string ): void => {
     const query = new URLSearchParams(location.search);
     const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
     const filtersAsString = composeStringFromFilters(searchFilterValues);
@@ -99,10 +99,10 @@ const MainPage = () => {
 
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
     updatePageURL(query);
-  }, [dispatch, searchFilterValues, location, composeStringFromFilters, updatePageURL, getSearchParamsFromURL]);
+  }, [ dispatch, searchFilterValues, location, composeStringFromFilters, updatePageURL, getSearchParamsFromURL ]);
 
 
-  const handleShowMoreButtonClick = useCallback(() => {
+  const handleShowMoreButtonClick = useCallback((): void => {
     const query = new URLSearchParams(location.search);
     const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL;
     const newTotalRecipes = parseInt(totalRecipes, 10) + RECIPES_TO_SHOW_DELTA;
@@ -111,14 +111,14 @@ const MainPage = () => {
 
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
     updatePageURL(query);
-  }, [dispatch, getSearchParamsFromURL, location, updatePageURL]);
+  }, [ dispatch, getSearchParamsFromURL, location, updatePageURL ]);
 
-  const handleResetButtonClick = () => {
+  const handleResetButtonClick = useCallback((): void => {
     const query = new URLSearchParams();
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
     dispatch(clearSearchFilterValues());
     updatePageURL(query);
-  };
+  }, [ dispatch, getSearchParamsFromURL, updatePageURL ]);
 
   return (
     <>
@@ -129,9 +129,11 @@ const MainPage = () => {
           onSearchSubmitButtonClick={searchRecipes}
           onResetButtonClick={handleResetButtonClick}
         />
+
         <h1 className={styles.mainPageTitle}>Recipes</h1>
+
         {areRecipePreviewsLoading ? 
-          <Loader /> : (
+          <LoaderComponent /> : (
             <>
             <RecipesContainerComponent searchBarValue={searchBarValue} />
             <div className={styles.mainPageActions}>
@@ -140,8 +142,7 @@ const MainPage = () => {
                 showMoreButtonHidden: recipesPreviewsList.length === 0 && searchBarValue !== '',
                 })} 
                 onClick={handleShowMoreButtonClick}
-              >
-                Show more
+              >Show more
               </button>
             </div>
           </>

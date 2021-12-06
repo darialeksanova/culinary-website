@@ -8,18 +8,18 @@ import cookingTimeIcon from 'assets/cookingTimeIcon.png';
 import bookmark from 'assets/bookmark.png';
 import bin from 'assets/bin.png';
 import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
-import Loader from 'components/Loader';
+import LoaderComponent from 'components/LoaderComponent';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
 import { API_URL, API_KEY } from 'constants/index';
 import { RecipeFull } from 'types/recipeFull';
 import { DishNutrition } from 'types/dishNutrition';
 import { DishIngredients } from 'types/dishIngredients';
-import MyRecipeBookButton from 'components/MyRecipeBookButton/MyRecipeBookButton';
+import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent';
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
-  const favouriteRecipesList = useSelector((state: RootState) => state.favouriteRecipes.favouriteRecipes);
-  const isRecipeFavourite = Boolean(favouriteRecipesList.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
+  const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
+  const isRecipeFavourite = Boolean(favouriteRecipes.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,13 +67,13 @@ const RecipePage = () => {
           navigate('/page-not-found', { replace: true });
         });
     };
-}, [dispatch, params, navigate]);
+}, [ dispatch, params, navigate ]);
 
-  const handleAddToMyRecipeBookButtonClick = useCallback((fullRecipe: RecipeFull) => {
+  const handleAddToMyRecipeBookButtonClick = useCallback(( fullRecipe: RecipeFull ): void => {
     if (params.recipeId) {
       dispatch(addRecipeToFavourites({ id: fullRecipe.id, title:fullRecipe.title, image: fullRecipe.image }));
-    };
-  }, [dispatch, params.recipeId]);
+    }
+  }, [ dispatch, params.recipeId ]);
 
   return (
     <>
@@ -83,11 +83,14 @@ const RecipePage = () => {
           closeModal={() => setIsConfirmRecipeDeleteModalVisible(false)}
         />
       }
-      {(!fullRecipe && !dishNutrition) && <Loader />}
+
+      {(!fullRecipe && !dishNutrition) && <LoaderComponent />}
+
       {(fullRecipe && dishNutrition) && (
         <div className={styles.recipePage}>
           <h1 className={styles.recipeTitle}>{fullRecipe.title[0].toUpperCase()}{fullRecipe.title.slice(1).toLowerCase()}</h1>
           <div className={styles.recipeContainer}>
+
             <div className={styles.recipeShortDescription}>
               <div className={styles.shortDescriptionItem}>
                 <img className={styles.servingsIcon} src={servingsIcon} alt='servings'></img>
@@ -98,7 +101,7 @@ const RecipePage = () => {
                 {fullRecipe.readyInMinutes} min
               </div>
               {!isRecipeFavourite && 
-                <MyRecipeBookButton 
+                <MyRecipeBookButtonComponent 
                   text='Add to my recipe book' 
                   purpose='addButton' 
                   icon={bookmark}
@@ -107,7 +110,7 @@ const RecipePage = () => {
                 />
               }
               {isRecipeFavourite && (
-                 <MyRecipeBookButton 
+                 <MyRecipeBookButtonComponent 
                  text='Delete from my recipe book'
                  purpose='deleteButton'
                  icon={bin}
@@ -116,6 +119,7 @@ const RecipePage = () => {
                />
               )}
             </div>
+
             <div className={styles.nutritionContainer}>
               <h2 className={styles.nutritionTitle}>Nutrition value</h2>
               <div className={styles.nutrients}>
@@ -125,44 +129,49 @@ const RecipePage = () => {
                 <div className={styles.nutrient}>Protein: {dishNutrition.protein}</div>
               </div>
             </div>
+
             <div className={styles.recipeImageContainer}>
               <img className={styles.recipeImage} src={fullRecipe.image} alt='dish'></img>
             </div>
+
             <div className={styles.recipeFullDescription}>
-            <div className={styles.recipeSummary} dangerouslySetInnerHTML={{__html: fullRecipe.summary}}></div>
-            </div>
-            <div className={styles.recipeIngredientsContainer}>
-              <h2 className={styles.recipeIngredientsTitle}>Ingredients</h2>
-              <ul className={styles.recipeIngredientsList}>
-                {dishIngredients?.ingredients.map((ingredient, index) =>
-                  <li key={index}>{ingredient.name}: {ingredient.amount.metric.value} {ingredient.amount.metric.unit}</li>
-                )}
-              </ul>
-            </div>
-            <div className={styles.recipeInstructionsContainer}>
-              <h2 className={styles.recipeInstructionsTitle}>How to cook?</h2>
-              {(fullRecipe.analyzedInstructions.length !== 0) ? (
-                <>
-                  <div className={styles.recipeInstructions}>{fullRecipe.analyzedInstructions[0].steps.map((step, index) => {
-                    return (
-                      <React.Fragment key={index}> 
-                        <h4 className={styles.stepNumber}>Step {index + 1}</h4>
-                        <div className={styles.step}>{step.step}</div>
-                      </React.Fragment>
-                    )})}
-                  </div>
-                </>
-              ) : 
-                <div className={styles.noInstructionsMessage}>Unfortunately, there is no step-by-step recipe for this dish yet :c</div>
-              }
-            </div>
-            <div className={styles.linkToSearchResults}>
-              <button className={styles.backToSearchResultsButton} onClick={() => navigate(-1)}>Back to search results</button>
+
+              <div className={styles.recipeSummary} dangerouslySetInnerHTML={{__html: fullRecipe.summary}}></div>
+
+              <div className={styles.recipeIngredientsContainer}>
+                <h2 className={styles.recipeIngredientsTitle}>Ingredients</h2>
+                <ul className={styles.recipeIngredientsList}>
+                  {dishIngredients?.ingredients.map(( ingredient, index ) =>
+                    <li key={index}>{ingredient.name}: {ingredient.amount.metric.value} {ingredient.amount.metric.unit}</li>
+                  )}
+                </ul>
+              </div>
+
+              <div className={styles.recipeInstructionsContainer}>
+                <h2 className={styles.recipeInstructionsTitle}>How to cook?</h2>
+                {(fullRecipe.analyzedInstructions.length !== 0) ? (
+                  <>
+                    <div className={styles.recipeInstructions}>{fullRecipe.analyzedInstructions[0].steps.map(( step, index ) => {
+                      return (
+                        <React.Fragment key={index}> 
+                          <h4 className={styles.stepNumber}>Step {index + 1}</h4>
+                          <div className={styles.step}>{step.step}</div>
+                        </React.Fragment>
+                      )})}
+                    </div>
+                  </>
+                ) : 
+                  <div className={styles.noInstructionsMessage}>Unfortunately, there is no step-by-step recipe for this dish yet :c</div>
+                }
+              </div>
+
+              <div className={styles.linkToSearchResults}>
+                <button className={styles.backToSearchResultsButton} onClick={() => navigate(-1)}>Back to search results</button>
+              </div>
             </div>
           </div>
         </div>
-        )
-      }
+      )}
     </>
   );
 };
