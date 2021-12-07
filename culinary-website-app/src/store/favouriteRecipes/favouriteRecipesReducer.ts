@@ -3,6 +3,7 @@ import { FavouriteRecipesAction, FavouriteRecipesReducerAction, FavouriteRecipes
 
 const initialState: FavouriteRecipesState = {
   favouriteRecipes: [],
+  favouriteRecipesTotalAmount: 0,
 };
 
 export const favouriteRecipesReducer: Reducer<FavouriteRecipesState, FavouriteRecipesReducerAction> = (state = initialState, action) => {
@@ -11,6 +12,13 @@ export const favouriteRecipesReducer: Reducer<FavouriteRecipesState, FavouriteRe
       return {
         ...state,
         favouriteRecipes: action.payload,
+      };
+    }
+
+    case FavouriteRecipesAction.SET_FAVOURITE_RECIPES_TOTAL_AMOUNT: {
+      return {
+        ...state,
+        favouriteRecipesTotalAmount: action.payload,
       };
     }
 

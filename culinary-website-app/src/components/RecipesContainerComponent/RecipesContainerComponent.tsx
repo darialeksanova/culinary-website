@@ -3,14 +3,16 @@ import { RecipePreview } from 'types/recipePreview';
 import styles from './RecipesContainerComponent.module.css';
 
 type Props = {
-  recipes: Array<RecipePreview & { isFavourite: boolean }>;
+  recipesToShow: Array<RecipePreview & { isFavourite: boolean }>;
+  totalResults: number;
 };
 
-const RecipesContainerComponent = ({ recipes }: Props) => {
+const RecipesContainerComponent = ({ recipesToShow, totalResults }: Props) => {
   return (
     <div className={styles.recipesContainer}>
+      <h5 className={styles.totalResultsTitle}>Total: {totalResults} recipes</h5>
       <ul className={styles.recipesList}>
-        {recipes.map(recipe => <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={recipe.isFavourite}/>)}
+        {recipesToShow.map(recipe => <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={recipe.isFavourite}/>)}
       </ul>
     </div>
   );
