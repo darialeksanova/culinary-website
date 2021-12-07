@@ -7,14 +7,12 @@ import { loadRecipesPreviews } from 'store/recipesPreviews/actions';
 import { RootState } from 'store/store';
 import { SearchFilterValue } from 'types/searchFilterValue';
 import styles from './MainPage.module.css';
-import classNames from 'classnames/bind';
 import { SearchParams } from 'types/searchParams';
 import { clearSearchFilterValues, setSearchFilterValues } from 'store/searchFilterValues/actions';
 import RecipesContainerComponent from 'components/RecipesContainerComponent';
 import { RECIPES_TO_SHOW_INITIAL, RECIPES_TO_SHOW_DELTA } from 'constants/index';
 import { RecipePreview } from 'types/recipePreview';
-
-const cx = classNames.bind(styles);
+import ShowMoreButtonComponent from 'components/ShowMoreButtonComponent';
 
 const MainPage = () => {
   const recipesPreviews = useSelector(( state: RootState ) => state.recipesPreviews.recipesPreviews);
@@ -159,17 +157,15 @@ const MainPage = () => {
             }
 
             {(recipesPreviews.length === 0 && searchBarValue !== '') && 
-              <h2 className={styles.noResultsTitle}>No results found!</h2>
+              <h2 className={styles.noResultsTitle}>No recipes found!</h2>
             }
 
             <div className={styles.mainPageActions}>
-              <button className={cx({
-                showMoreButton: true,
-                showMoreButtonHidden: recipesPreviews.length === 0 && searchBarValue !== '',
-                })} 
-                onClick={handleShowMoreButtonClick}
-              >Show more
-              </button>
+              <ShowMoreButtonComponent 
+                onClick={handleShowMoreButtonClick} 
+                recipesShownAmount={recipesPreviews.length}
+                recipesTotalAmount={searchResultsTotalAmount} 
+              />
             </div>
           </>
         )}

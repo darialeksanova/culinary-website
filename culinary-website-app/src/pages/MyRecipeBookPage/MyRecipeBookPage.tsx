@@ -6,6 +6,7 @@ import styles from './MyRecipeBookPage.module.css';
 import { RECIPES_TO_SHOW_DELTA, RECIPES_TO_SHOW_INITIAL } from 'constants/index';
 import RecipesContainerComponent from 'components/RecipesContainerComponent';
 import { RecipePreview } from 'types/recipePreview';
+import ShowMoreButtonComponent from 'components/ShowMoreButtonComponent';
 
 const MyRecipeBookPage = () => {
   const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
@@ -43,7 +44,11 @@ const MyRecipeBookPage = () => {
       />
 
       <div className={styles.favouritesPageActions}>
-        <button className={styles.showMoreButton} onClick={handleShowMoreButtonClick}>Show more</button>
+        <ShowMoreButtonComponent 
+          onClick={handleShowMoreButtonClick} 
+          recipesShownAmount={visibleRecipesAmount}
+          recipesTotalAmount={favouriteRecipesTotalAmount} 
+        />
       </div>
     </div>
   );
