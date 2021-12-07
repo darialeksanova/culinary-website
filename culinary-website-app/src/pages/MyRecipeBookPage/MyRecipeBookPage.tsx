@@ -9,6 +9,7 @@ import { RecipePreview } from 'types/recipePreview';
 
 const MyRecipeBookPage = () => {
   const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
+  const favouriteRecipesTotalAmount = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipesTotalAmount);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -36,7 +37,10 @@ const MyRecipeBookPage = () => {
     <div className={styles.favouritesPageContainer}>
       <h1 className={styles.favouritesPageTitle}>Your Favourite Recipes</h1>
 
-      <RecipesContainerComponent recipes={addIsFavouriteFieldToEachRecipe(favouriteRecipes.slice(0, visibleRecipesAmount))}/>
+      <RecipesContainerComponent 
+        recipesToShow={addIsFavouriteFieldToEachRecipe(favouriteRecipes.slice(0, visibleRecipesAmount))}
+        totalResults={favouriteRecipesTotalAmount}
+      />
 
       <div className={styles.favouritesPageActions}>
         <button className={styles.showMoreButton} onClick={handleShowMoreButtonClick}>Show more</button>

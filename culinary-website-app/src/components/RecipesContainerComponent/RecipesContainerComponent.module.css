@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.totalResultsTitle {
+  margin: 0;
+}
+
 .recipesList {
   display: flex;
   flex-direction: column;

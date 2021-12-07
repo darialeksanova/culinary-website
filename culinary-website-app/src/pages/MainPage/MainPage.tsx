@@ -21,6 +21,7 @@ const MainPage = () => {
   const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
   const areRecipePreviewsLoading = useSelector(( state: RootState ) => state.recipesPreviews.isLoading);
   const searchFilterValues = useSelector(( state: RootState ) => state.filterValues);
+  const searchResultsTotalAmount = useSelector(( state: RootState ) => state.recipesPreviews.searchResultsTotalAmount);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -95,10 +96,14 @@ const MainPage = () => {
 
     if (filtersAsString !== '') {
       query.set('filters', composeStringFromFilters(searchFilterValues));
+    } else {
+      query.delete('filters');
     }
 
     if (searchBarValue !== '') {
       query.set('searchInput', searchBarValue);
+    } else {
+      query.delete('searchInput');
     }
 
     dispatch(loadRecipesPreviews(getSearchParamsFromURL(query)));
@@ -145,11 +150,18 @@ const MainPage = () => {
 
         {areRecipePreviewsLoading ? 
           <LoaderComponent /> : (
-            <>
-            <RecipesContainerComponent recipes={mergeRecipesWithFavouriteRecipes(recipesPreviews, favouriteRecipes)} />
+          <>
+            {(recipesPreviews.length !== 0) &&
+              <RecipesContainerComponent 
+                recipesToShow={mergeRecipesWithFavouriteRecipes(recipesPreviews, favouriteRecipes)} 
+                totalResults={searchResultsTotalAmount} 
+              />
+            }
+
             {(recipesPreviews.length === 0 && searchBarValue !== '') && 
               <h2 className={styles.noResultsTitle}>No results found!</h2>
             }
+
             <div className={styles.mainPageActions}>
               <button className={cx({
                 showMoreButton: true,

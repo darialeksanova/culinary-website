@@ -3,6 +3,7 @@ import { RecipesPreviewsAction, RecipesPreviewsReducerAction, RecipesPreviewsSta
 
 const initialState: RecipesPreviewsState = {
   recipesPreviews: [],
+  searchResultsTotalAmount: 0,
   isLoading: false,
   isLoaded: false,
   error: null
@@ -31,6 +32,13 @@ export const recipesPreviewsReducer: Reducer<RecipesPreviewsState, RecipesPrevie
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    }
+
+    case RecipesPreviewsAction.SET_RECIPES_PREVIEWS_TOTAL_AMOUNT: {
+      return {
+        ...state,
+        searchResultsTotalAmount: action.payload,
       };
     }
 

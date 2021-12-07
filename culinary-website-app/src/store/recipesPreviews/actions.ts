@@ -4,7 +4,7 @@ import { PaginatedSearchResults } from "types/paginatedSearchResults";
 import { RecipePreview } from "types/recipePreview";
 import { SearchFilterValue } from "types/searchFilterValue";
 import { SearchParams } from "types/searchParams";
-import { LoadRecipesPreviewsFailureAction, LoadRecipesPreviewsStartedAction, LoadRecipesPreviewsSuccessAction, RecipesPreviewsAction } from "./types";
+import { LoadRecipesPreviewsFailureAction, LoadRecipesPreviewsStartedAction, LoadRecipesPreviewsSuccessAction, RecipesPreviewsAction, SetRecipesPreviewsTotalAmountAction } from "./types";
 
 const startRecipesPreviewLoading = (): LoadRecipesPreviewsStartedAction => {
   return {
@@ -16,6 +16,13 @@ const setRecipesPreviews = ( recipesPrewiews: RecipePreview[] ): LoadRecipesPrev
   return {
     type: RecipesPreviewsAction.LOAD_RECIPES_PREVIEWS_SUCCESS,
     payload: recipesPrewiews,
+  };
+};
+
+const setRecipesPreviewsTotalAmount = ( totalAmount: number ): SetRecipesPreviewsTotalAmountAction => {
+  return {
+    type: RecipesPreviewsAction.SET_RECIPES_PREVIEWS_TOTAL_AMOUNT,
+    payload: totalAmount,
   };
 };
 
@@ -68,14 +75,16 @@ const composeURLSearchParams = ( searchParams: SearchParams ): string => {
 export const loadRecipesPreviews = ( searchParams: SearchParams ) => ( dispatch: Dispatch ) => {
   dispatch(startRecipesPreviewLoading());
   Promise.all([
-    fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchParams.searchInput}&number=100`)
-      .then(response => {
-        if(response.ok) {
-          return response.json() as Promise<RecipePreview[]>;
-        }
+    searchParams.searchInput === ''
+      ? []
+      : fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchParams.searchInput}&number=100`)
+        .then(response => {
+          if(response.ok) {
+            return response.json() as Promise<RecipePreview[]>;
+          }
 
-        throw new Error('Error on dish ingredients fetch!');
-      }),
+          throw new Error('Error on dish ingredients fetch!');
+        }),
     fetch(`${API_URL}/recipes/complexSearch?${composeURLSearchParams(searchParams)}&number=100`)
       .then(response => {
         if(response.ok) {
@@ -85,14 +94,17 @@ export const loadRecipesPreviews = ( searchParams: SearchParams ) => ( dispatch:
         throw new Error('Error on recipe preview items fetch!');
       }),
   ])
-  .then(([ foundByIngredients, foundByOtherConditions ]) => {
-    let searchResult = [ ...foundByOtherConditions.results ];
+  .then(([ searchByIngredientsResult, complexSearchResult ]) => {
+    let searchResult = [ ...complexSearchResult.results ];
 
     if (searchParams.searchInput !== '') {
-      searchResult
-        .filter(recipeByOtherConditions => foundByIngredients
-          .find(recipeByIngredients => recipeByIngredients.id === recipeByOtherConditions.id)
+      searchResult = searchResult
+        .filter(recipeFromComplexSearch => searchByIngredientsResult
+          .find(recipeFromIngredientsSearch => recipeFromIngredientsSearch.id === recipeFromComplexSearch.id)
         );
+      dispatch(setRecipesPreviewsTotalAmount(searchResult.length));
+    } else {
+      dispatch(setRecipesPreviewsTotalAmount(complexSearchResult.totalResults));
     }
 
     dispatch(setRecipesPreviews(searchResult.slice(0, searchParams.totalRecipes)));
