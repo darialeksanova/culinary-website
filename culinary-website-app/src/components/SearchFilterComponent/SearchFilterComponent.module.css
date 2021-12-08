@@ -10,9 +10,14 @@
 }
 
 .searchFilterItem {
-  margin: 15px;
+  margin: 0 15px;
+}
+
+.searchFilterItem label {
+  cursor: pointer;
 }
 
 .searchFilterInput {
   margin-right: 10px;
+  cursor: pointer;
 }

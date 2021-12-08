@@ -25,47 +25,59 @@ const SearchFilterComponent = () => {
   return (
     <div className={styles.searchFilterContainer}>
       <div className={styles.searchFilterItem}>
-        <input className={styles.searchFilterInput} 
-          id='dairyFree' 
-          type='checkbox' 
-          value='dairy-free' 
-          checked={searchFilterValues.isDairyFree} 
-          onChange={handleSearchFilterValuesChange}
-        />
-        <label htmlFor='dairyFree'>Dairy free</label>
+        <label htmlFor='dairyFree'>
+          <input 
+            className={styles.searchFilterInput} 
+            id='dairyFree' 
+            type='checkbox' 
+            value='dairy-free' 
+            checked={searchFilterValues.isDairyFree} 
+            onChange={handleSearchFilterValuesChange}
+          />
+          Dairy free
+        </label>
       </div>
 
       <div className={styles.searchFilterItem}>
-        <input 
-          className={styles.searchFilterInput} 
-          type='checkbox' 
-          value='gluten-free' 
-          checked={searchFilterValues.isGlutenFree} 
-          onChange={handleSearchFilterValuesChange}
-        />
-        <label htmlFor='glutenFree'>Gluten free</label>
+        <label htmlFor='glutenFree'>
+          <input 
+            className={styles.searchFilterInput} 
+            id='glutenFree'
+            type='checkbox' 
+            value='gluten-free' 
+            checked={searchFilterValues.isGlutenFree} 
+            onChange={handleSearchFilterValuesChange}
+          />
+          Gluten free
+        </label>
       </div>
 
       <div className={styles.searchFilterItem}>
-        <input 
-          className={styles.searchFilterInput} 
-          type='checkbox' 
-          value='vegetarian' 
-          checked={searchFilterValues.isVegetarian} 
-          onChange={handleSearchFilterValuesChange}
-        />
-        <label htmlFor='vegetarian'>Vegetarian</label>
+        <label htmlFor='vegetarian'>
+          <input 
+            className={styles.searchFilterInput} 
+            id='vegetarian'
+            type='checkbox' 
+            value='vegetarian' 
+            checked={searchFilterValues.isVegetarian} 
+            onChange={handleSearchFilterValuesChange}
+          />
+          Vegetarian
+        </label>
       </div>
 
       <div className={styles.searchFilterItem}>
-        <input 
-          className={styles.searchFilterInput} 
-          type='checkbox' 
-          value='vegan' 
-          checked={searchFilterValues.isVegan} 
-          onChange={handleSearchFilterValuesChange}
-        />
-        <label htmlFor='vegan'>Vegan</label>
+        <label htmlFor='vegan'>
+          <input 
+            className={styles.searchFilterInput} 
+            id='vegan'
+            type='checkbox' 
+            value='vegan' 
+            checked={searchFilterValues.isVegan} 
+            onChange={handleSearchFilterValuesChange}
+          />
+          Vegan
+        </label>
       </div>
     </div>
   );
