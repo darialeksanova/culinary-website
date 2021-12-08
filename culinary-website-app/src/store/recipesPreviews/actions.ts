@@ -1,5 +1,5 @@
-import { API_URL, API_KEY } from "constants/index";
 import { Dispatch } from "redux";
+import { apiService } from "services/ApiService";
 import { PaginatedSearchResults } from "types/paginatedSearchResults";
 import { RecipePreview } from "types/recipePreview";
 import { SearchFilterValue } from "types/searchFilterValue";
@@ -54,7 +54,7 @@ const getDietFilterValues = ( searchFilterValues: SearchFilterValue ): string[] 
 const composeURLSearchParams = ( searchParams: SearchParams ): string => {
   const dietFilterValues = getDietFilterValues(searchParams.filters);
   const complexSearchURLParams: { [key: string]: string } = {
-    apiKey: API_KEY,
+    apiKey: apiService.getApiKey(),
   };
 
   if (dietFilterValues.length !== 0) {
@@ -73,11 +73,14 @@ const composeURLSearchParams = ( searchParams: SearchParams ): string => {
 };
 
 export const loadRecipesPreviews = ( searchParams: SearchParams ) => ( dispatch: Dispatch ) => {
+  const apiUrl = apiService.getApiUrl();
+
   dispatch(startRecipesPreviewLoading());
+
   Promise.all([
     searchParams.searchInput === ''
       ? []
-      : fetch(`${API_URL}/recipes/findByIngredients?apiKey=${API_KEY}&ingredients=${searchParams.searchInput}&number=100`)
+      : fetch(`${apiUrl}/recipes/findByIngredients?apiKey=${apiService.getApiKey()}&ingredients=${searchParams.searchInput}&number=100`)
         .then(response => {
           if(response.ok) {
             return response.json() as Promise<RecipePreview[]>;
@@ -85,7 +88,7 @@ export const loadRecipesPreviews = ( searchParams: SearchParams ) => ( dispatch:
 
           throw new Error('Error on dish ingredients fetch!');
         }),
-    fetch(`${API_URL}/recipes/complexSearch?${composeURLSearchParams(searchParams)}&number=100`)
+    fetch(`${apiUrl}/recipes/complexSearch?${composeURLSearchParams(searchParams)}&number=100`)
       .then(response => {
         if(response.ok) {
           return response.json() as Promise<PaginatedSearchResults<RecipePreview>>;

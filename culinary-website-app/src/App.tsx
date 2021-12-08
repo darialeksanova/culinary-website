@@ -13,13 +13,14 @@ import { RootState } from 'store/store';
 import classNames from 'classnames/bind';
 import { Theme } from 'types/theme';
 import { setDarkTheme, setLightTheme } from 'store/theme/actions';
+import { setupFetchInterceptor } from 'setupFetchInterceptor';
 
+setupFetchInterceptor();
 const cx = classNames.bind(styles);
 
 function App() {
   const dispatch = useDispatch();
   const theme = useSelector(( state: RootState ) => state.theme.theme);
-
 
   useEffect(() => {
     dispatch(loadFavouriteRecipesFromLocalStorage());

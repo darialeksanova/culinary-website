@@ -10,11 +10,11 @@ import bin from 'assets/bin.png';
 import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
 import LoaderComponent from 'components/LoaderComponent';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
-import { API_URL, API_KEY } from 'constants/index';
 import { RecipeFull } from 'types/recipeFull';
 import { DishNutrition } from 'types/dishNutrition';
 import { DishIngredients } from 'types/dishIngredients';
 import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent';
+import { apiService } from 'services/ApiService';
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
@@ -31,8 +31,11 @@ const RecipePage = () => {
   
   useEffect(() => {
     if (params.recipeId) {
+      const apiKey = apiService.getApiKey();
+      const apiUrl = apiService.getApiUrl();
+
       Promise.all([
-        fetch(`${API_URL}/recipes/${params.recipeId}/information?apiKey=${API_KEY}`)
+        fetch(`${apiUrl}/recipes/${params.recipeId}/information?apiKey=${apiKey}`)
           .then(response => {
             if(response.ok) {
               return response.json() as Promise<RecipeFull>;
@@ -40,7 +43,7 @@ const RecipePage = () => {
 
             throw new Error('Error on full recipe fetch!');
           }), 
-        fetch(`${API_URL}/recipes/${params.recipeId}/nutritionWidget.json?apiKey=${API_KEY}`)
+        fetch(`${apiUrl}/recipes/${params.recipeId}/nutritionWidget.json?apiKey=${apiKey}`)
           .then(response => {
             if(response.ok) {
               return response.json() as Promise<DishNutrition>;
@@ -48,7 +51,7 @@ const RecipePage = () => {
 
             throw new Error('Error on dish nutrients fetch!');
           }),
-        fetch(`${API_URL}/recipes/${params.recipeId}/ingredientWidget.json?apiKey=${API_KEY}`)
+        fetch(`${apiUrl}/recipes/${params.recipeId}/ingredientWidget.json?apiKey=${apiKey}`)
           .then(response => {
             if(response.ok) {
               return response.json();
