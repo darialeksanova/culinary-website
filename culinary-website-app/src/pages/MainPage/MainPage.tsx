@@ -12,7 +12,7 @@ import { clearSearchFilterValues, setSearchFilterValues } from 'store/searchFilt
 import RecipesContainerComponent from 'components/RecipesContainerComponent';
 import { RECIPES_TO_SHOW_INITIAL, RECIPES_TO_SHOW_DELTA } from 'constants/index';
 import { RecipePreview } from 'types/recipePreview';
-import ShowMoreButtonComponent from 'components/ShowMoreButtonComponent';
+import UniversalButtonComponent from 'components/UniversalButtonComponent';
 
 const MainPage = () => {
   const recipesPreviews = useSelector(( state: RootState ) => state.recipesPreviews.recipesPreviews);
@@ -161,11 +161,14 @@ const MainPage = () => {
             }
 
             <div className={styles.mainPageActions}>
-              <ShowMoreButtonComponent 
-                onClick={handleShowMoreButtonClick} 
-                recipesShownAmount={recipesPreviews.length}
-                recipesTotalAmount={searchResultsTotalAmount} 
-              />
+              {(searchResultsTotalAmount !== 0 || searchResultsTotalAmount >= recipesPreviews.length) && (
+                <UniversalButtonComponent 
+                  text='Show more' 
+                  size='medium' 
+                  weight='bold'
+                  onClick={handleShowMoreButtonClick} 
+                />
+              )}
             </div>
           </>
         )}

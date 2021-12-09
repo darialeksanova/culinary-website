@@ -65,7 +65,7 @@
 }
 
 .searchBarButton:hover {
-  transform: scale(1.02);
+  font-size: 14.4px;
 }
 
 .searchFilterButtonClicked {
