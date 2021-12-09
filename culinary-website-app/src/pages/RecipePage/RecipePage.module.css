@@ -32,6 +32,14 @@
   margin-right: 10px;
 }
 
+.whiteIcon {
+  filter: invert(1);
+}
+
+.MyRecipeBookActions {
+  margin: 0 30px;
+}
+
 .nutritionContainer {
   display: flex;
   flex-direction: column;
