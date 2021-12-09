@@ -12,7 +12,11 @@ const RecipesContainerComponent = ({ recipesToShow, totalResults }: Props) => {
     <div className={styles.recipesContainer}>
       <h5 className={styles.totalResultsTitle}>Total: {totalResults} recipes</h5>
       <ul className={styles.recipesList}>
-        {recipesToShow.map(recipe => <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={recipe.isFavourite}/>)}
+        {recipesToShow
+          .map(recipe => 
+            <RecipePreviewComponent key={recipe.id} recipePreview={recipe} isFavourite={recipe.isFavourite}/>
+          )
+        }
       </ul>
     </div>
   );

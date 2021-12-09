@@ -5,8 +5,8 @@ import { deleteRecipeFromFavourites } from 'store/favouriteRecipes/actions';
 import { RecipePreview } from 'types/recipePreview';
 import { Theme } from 'types/theme';
 import { RootState } from 'store/store';
-import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent';
 import { useCallback } from 'react';
+import UniversalButtonComponent from 'components/UniversalButtonComponent';
 
 const cx = classNames.bind(styles);
 
@@ -29,22 +29,38 @@ const ConfirmDeleteRecipeModalComponent = ({ recipePreview, closeModal }: Props)
       <div className={styles.backdrop} onClick={closeModal}></div>
       <div className={cx({
         modal: true,
-        dark: theme === Theme.dark,
+        modalDark: theme === Theme.dark,
       })}>
 
-        <h4 className={styles.modalTitle}>Are you sure to delete "{recipePreview.title}" recipe from your recipe book?</h4>
+        <h4 className={styles.modalTitle}>
+          Are you sure to delete "
+            {recipePreview.title[0].toUpperCase()}{recipePreview.title.slice(1).toLowerCase()}
+          " recipe from your recipe book?
+        </h4>
         
         <div className={styles.modalActions}>
-          <MyRecipeBookButtonComponent 
-            text='No' 
-            purpose='noButton' 
-            onClick={closeModal} 
-          />
-          <MyRecipeBookButtonComponent 
-            text='Yes' 
-            purpose='yesButton' 
-            onClick={handleDeleteFromMyRecipeBookButtonClick} 
-          />
+          <div className={cx({
+            noButton: true,
+            buttonDark: theme === Theme.dark,
+          })}>
+            <UniversalButtonComponent 
+              text='No'
+              size='small'
+              weight='regular'
+              onClick={closeModal}
+            />
+          </div>
+          <div className={cx({
+            yesButton: true,
+            buttonDark: theme === Theme.dark,
+          })}>
+            <UniversalButtonComponent 
+              text='Yes'
+              size='small'
+              weight='regular'
+              onClick={handleDeleteFromMyRecipeBookButtonClick}
+            />
+          </div>
         </div>
       </div>
     </div>

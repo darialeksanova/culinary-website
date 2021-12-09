@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   width: 760px;
-  height: 200px;
+  height: 220px;
   margin-bottom: 30px;
   padding: 20px;
   border-radius: 2px;
@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  width: 230px;
+  width: 240px;
   height: 100%;
   margin-right: 13px;
 }
@@ -29,6 +29,7 @@
 .recipeContent {
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
 }
 
@@ -37,23 +38,27 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  font-size: 22px;
+  padding: 15px;
 }
 
 .recipeActions {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   flex-shrink: 0;
 }
 
-.recipePreviewComponentButton {
-  width: 200px;
-  height: 30px;
-  margin: 0 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
+.addToRecipeBookButton {
+  background-color: var(--color-secondary);
+}
+
+.deleteFromRecipeBookButton {
+  background-color: var(--color-warning);
+}
+
+.buttonDark {
   background-color: transparent;
-  font-size: 14px;
-  cursor: pointer;
 }
 
 .recipeDetailsLink {

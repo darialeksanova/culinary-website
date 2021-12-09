@@ -26,9 +26,9 @@
   flex-direction: column;
   text-align: center;
   z-index: 100;
-  width: 500px;
-  height: 220px;
-  padding: 15px;
+  width: 530px;
+  height: 250px;
+  padding: 30px;
   font-size: 16px;
   border: 1px solid var(--color-border);
   border-radius: 3px;
@@ -37,16 +37,31 @@
 
 .modalTitle {
   flex-grow: 1;
+  font-size: 20px;
+  padding: 0 15px;
+  margin-top: 10px;
 }
 
 .modalActions {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-shrink: 0;
   height: 50px;
   padding: 10px 0;
 }
 
-.dark {
+.noButton {
+  background-color: var(--color-secondary);
+}
+
+.yesButton {
+  background-color: var(--color-warning);
+}
+
+.buttonDark {
+  background-color: transparent;
+}
+
+.modalDark {
   background-color: var(--color-app-main-2);
 }

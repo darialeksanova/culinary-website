@@ -5,16 +5,14 @@ import { RootState } from 'store/store';
 import styles from './RecipePage.module.css';
 import servingsIcon from 'assets/servingsIcon.png';
 import cookingTimeIcon from 'assets/cookingTimeIcon.png';
-import bookmark from 'assets/bookmark.png';
-import bin from 'assets/bin.png';
 import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
 import LoaderComponent from 'components/LoaderComponent';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
 import { RecipeFull } from 'types/recipeFull';
 import { DishNutrition } from 'types/dishNutrition';
 import { DishIngredients } from 'types/dishIngredients';
-import MyRecipeBookButtonComponent from 'components/MyRecipeBookButtonComponent';
 import { apiService } from 'services/ApiService';
+import UniversalButtonComponent from 'components/UniversalButtonComponent';
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
@@ -104,20 +102,18 @@ const RecipePage = () => {
                 {fullRecipe.readyInMinutes} min
               </div>
               {!isRecipeFavourite && 
-                <MyRecipeBookButtonComponent 
-                  text='Add to my recipe book' 
-                  purpose='addButton' 
-                  icon={bookmark}
-                  specialButton
+                <UniversalButtonComponent 
+                  text='Add to recipe book' 
+                  size='large'
+                  weight='bold'
                   onClick={() => handleAddToMyRecipeBookButtonClick(fullRecipe)} 
                 />
               }
               {isRecipeFavourite && (
-                 <MyRecipeBookButtonComponent 
-                 text='Delete from my recipe book'
-                 purpose='deleteButton'
-                 icon={bin}
-                 specialButton
+                 <UniversalButtonComponent 
+                 text='Delete from recipe book'
+                 size='large'
+                 weight='bold'
                  onClick={() => setIsConfirmRecipeDeleteModalVisible(true)}
                />
               )}
@@ -164,12 +160,19 @@ const RecipePage = () => {
                     </div>
                   </>
                 ) : 
-                  <div className={styles.noInstructionsMessage}>Unfortunately, there is no step-by-step recipe for this dish yet :c</div>
+                  <div className={styles.noInstructionsMessage}>
+                    Unfortunately, there is no step-by-step recipe for this dish yet :c
+                  </div>
                 }
               </div>
 
               <div className={styles.linkToSearchResults}>
-                <button className={styles.backToSearchResultsButton} onClick={() => navigate(-1)}>Back to search results</button>
+                <UniversalButtonComponent 
+                  text='Back to search results' 
+                  size='large' 
+                  weight='bold'
+                  onClick={() => navigate(-1)} 
+                />
               </div>
             </div>
           </div>

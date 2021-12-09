@@ -6,7 +6,7 @@ import styles from './MyRecipeBookPage.module.css';
 import { RECIPES_TO_SHOW_DELTA, RECIPES_TO_SHOW_INITIAL } from 'constants/index';
 import RecipesContainerComponent from 'components/RecipesContainerComponent';
 import { RecipePreview } from 'types/recipePreview';
-import ShowMoreButtonComponent from 'components/ShowMoreButtonComponent';
+import UniversalButtonComponent from 'components/UniversalButtonComponent';
 
 const MyRecipeBookPage = () => {
   const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
@@ -44,11 +44,13 @@ const MyRecipeBookPage = () => {
       />
 
       <div className={styles.favouritesPageActions}>
-        <ShowMoreButtonComponent 
-          onClick={handleShowMoreButtonClick} 
-          recipesShownAmount={visibleRecipesAmount}
-          recipesTotalAmount={favouriteRecipesTotalAmount} 
-        />
+        {(favouriteRecipesTotalAmount !== 0 || favouriteRecipesTotalAmount >= visibleRecipesAmount) && (
+          <UniversalButtonComponent 
+            text='Show more' 
+            size='medium' 
+            weight='bold'
+            onClick={handleShowMoreButtonClick}/>
+        )}
       </div>
     </div>
   );
