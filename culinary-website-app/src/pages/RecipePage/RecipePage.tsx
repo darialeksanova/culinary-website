@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { RootState } from 'store/store';
 import styles from './RecipePage.module.css';
-import servingsIcon from 'assets/servingsIcon.png';
-import cookingTimeIcon from 'assets/cookingTimeIcon.png';
+import servingsIcon from 'assets/servings.png';
+import cookingTimeIcon from 'assets/cookingTime.png';
 import { addRecipeToFavourites } from 'store/favouriteRecipes/actions';
 import LoaderComponent from 'components/LoaderComponent';
 import ConfirmDeleteRecipeModalComponent from 'components/ConfirmDeleteRecipeModalComponent';
@@ -13,9 +13,14 @@ import { DishNutrition } from 'types/dishNutrition';
 import { DishIngredients } from 'types/dishIngredients';
 import { apiService } from 'services/ApiService';
 import UniversalButtonComponent from 'components/UniversalButtonComponent';
+import classNames from 'classnames/bind';
+import { Theme } from 'types/theme';
+
+const cx = classNames.bind(styles);
 
 const RecipePage = () => {
   const params = useParams<'recipeId'>();
+  const theme = useSelector(( state: RootState ) => state.theme.theme);
   const favouriteRecipes = useSelector(( state: RootState ) => state.favouriteRecipes.favouriteRecipes);
   const isRecipeFavourite = Boolean(favouriteRecipes.find(favouriteRecipe => favouriteRecipe.id === Number(params.recipeId)));
 
@@ -94,29 +99,45 @@ const RecipePage = () => {
 
             <div className={styles.recipeShortDescription}>
               <div className={styles.shortDescriptionItem}>
-                <img className={styles.servingsIcon} src={servingsIcon} alt='servings'></img>
+                <img className={cx({
+                  servingsIcon: true,
+                  whiteIcon: theme === Theme.dark,
+                  })} 
+                  src={servingsIcon} 
+                  alt='servings'
+                >
+                </img>
                 {fullRecipe.servings}
               </div>
               <div className={styles.shortDescriptionItem}>
-                <img className={styles.cookingTimeIcon} src={cookingTimeIcon} alt='ready-in-minutes'></img>
+                <img className={cx({
+                  cookingTimeIcon: true,
+                  whiteIcon: theme === Theme.dark,
+                  })} 
+                  src={cookingTimeIcon} 
+                  alt='ready-in-minutes'
+                >
+                </img>
                 {fullRecipe.readyInMinutes} min
               </div>
-              {!isRecipeFavourite && 
-                <UniversalButtonComponent 
-                  text='Add to recipe book' 
+              <div className={styles.MyRecipeBookActions}>
+                {!isRecipeFavourite && 
+                  <UniversalButtonComponent 
+                    text='Add to recipe book' 
+                    size='large'
+                    weight='bold'
+                    onClick={() => handleAddToMyRecipeBookButtonClick(fullRecipe)} 
+                  />
+                }
+                {isRecipeFavourite && (
+                  <UniversalButtonComponent 
+                  text='Delete from recipe book'
                   size='large'
                   weight='bold'
-                  onClick={() => handleAddToMyRecipeBookButtonClick(fullRecipe)} 
+                  onClick={() => setIsConfirmRecipeDeleteModalVisible(true)}
                 />
-              }
-              {isRecipeFavourite && (
-                 <UniversalButtonComponent 
-                 text='Delete from recipe book'
-                 size='large'
-                 weight='bold'
-                 onClick={() => setIsConfirmRecipeDeleteModalVisible(true)}
-               />
-              )}
+                )}
+              </div>
             </div>
 
             <div className={styles.nutritionContainer}>
