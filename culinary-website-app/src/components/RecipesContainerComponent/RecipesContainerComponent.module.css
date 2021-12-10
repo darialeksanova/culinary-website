@@ -1,0 +1,17 @@
+.recipesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.totalResultsTitle {
+  margin: 0;
+}
+
+.recipesList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  list-style: none;
+  padding: 0;
+}

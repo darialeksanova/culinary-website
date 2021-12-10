@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&family=Indie+Flower&display=swap');
+
+:root {
+  --font-default: 'Courgette', serif;
+  --color-primary: rgb(180, 221, 145);
+  --color-secondary: rgba(245, 255, 239, 0.884);
+  --color-app-background: rgb(243, 243, 243);
+  --color-app-main: #fff;
+  --color-border: rgb(230, 230, 230);
+  --color-warning: rgb(255, 246, 246);
+  --color-app-background-2: rgb(83, 83, 83);
+  --color-app-main-2: rgb(48, 48, 48);
+  --color-secondary-2: rgba(82, 95, 74, 0.884);
+  --color-warning-2: rgb(97, 84, 84);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-default);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-default);
+}

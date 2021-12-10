@@ -1,0 +1,31 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background-color: var(--color-app-background);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  width: 80vw;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: var(--color-app-main);
+}
+
+.AppDark {
+  background-color: var(--color-app-background-2);
+}
+
+.AppDark * {
+  color: var(--color-app-main);
+}
+
+.mainDark {
+  background-color: var(--color-app-main-2);
+}

@@ -1,0 +1,48 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 150px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.small {
+  width: 170px;
+}
+
+.medium {
+  width: 200px;
+}
+
+.large {
+  width: 230px;
+}
+
+.regular {
+  font-weight: 400;
+  font-size: 16px;
+  border-bottom: 1px solid black;
+}
+
+.regular:hover {
+  font-size: 16.4px;
+}
+
+.bold {
+  font-weight: 700;
+  font-size: 18px;
+  border-bottom: 2px solid black;
+}
+
+.bold:hover {
+  font-size: 18.4px;
+}
+
+.buttonDark {
+  border-color: var(--color-app-main);
+  background-color: transparent;
+}

@@ -1,0 +1,20 @@
+.favouritesPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favouritesPageTitle {
+  flex-shrink: 0;
+}
+
+.favouritesList {
+  flex-grow: 1;
+  list-style: none;
+  padding: 0;
+}
+
+.favouritesPageActions {
+  display: flex;
+  flex-shrink: 0;
+}
