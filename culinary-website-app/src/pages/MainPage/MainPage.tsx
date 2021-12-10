@@ -161,7 +161,7 @@ const MainPage = () => {
             }
 
             <div className={styles.mainPageActions}>
-              {(searchResultsTotalAmount !== 0 || searchResultsTotalAmount >= recipesPreviews.length) && (
+              {(searchResultsTotalAmount !== 0 && searchResultsTotalAmount > recipesPreviews.length) && (
                 <UniversalButtonComponent 
                   text='Show more' 
                   size='medium' 

@@ -44,7 +44,7 @@ const MyRecipeBookPage = () => {
       />
 
       <div className={styles.favouritesPageActions}>
-        {(favouriteRecipesTotalAmount !== 0 || favouriteRecipesTotalAmount >= visibleRecipesAmount) && (
+        {(favouriteRecipesTotalAmount !== 0 && favouriteRecipesTotalAmount > visibleRecipesAmount) && (
           <UniversalButtonComponent 
             text='Show more' 
             size='medium' 
