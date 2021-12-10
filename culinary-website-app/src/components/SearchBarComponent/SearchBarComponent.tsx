@@ -18,6 +18,7 @@ type Props = {
 
 const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSubmitButtonClick, onResetButtonClick }: Props) => {
   const theme = useSelector((state: RootState) => state.theme.theme);
+  const searchFilterValues = useSelector((state: RootState) => state.filterValues);
   const [isSearchFilterOpen, setIsSearchFilterOpen] = useState(false);
 
   const handleFilterButtonClick = useCallback(
@@ -37,6 +38,7 @@ const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSu
             className={styles.searchInput} 
             type='text' 
             value={searchBarValue}
+            maxLength={60}
             placeholder='What do you want to cook today?' 
             onChange={( event ) => onSearchBarValueChange(event.target.value)}
           />
@@ -57,7 +59,12 @@ const SearchBarComponent = ({ searchBarValue, onSearchBarValueChange, onSearchSu
         >Reset
         </button>
         
-        <button className={styles.searchBarButton} onClick={() => onSearchSubmitButtonClick(searchBarValue)}>Search</button>
+        <button 
+          className={styles.searchBarButton} 
+          disabled={searchBarValue === '' && Object.values(searchFilterValues).every(value => value === false)}
+          onClick={() => onSearchSubmitButtonClick(searchBarValue)}
+        >Search
+        </button>
       </div>
     
     {isSearchFilterOpen && (
