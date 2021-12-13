@@ -7,18 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { Theme } from 'types/theme';
 import { setDarkTheme, setLightTheme } from 'store/theme/actions';
+import { useCallback } from 'react';
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const theme = useSelector(( state: RootState ) => state.theme.theme);
 
-  const handleThemeSwitch = (): void => {
+  const handleThemeSwitch = useCallback((): void => {
     if (theme === Theme.light) {
       dispatch(setDarkTheme());
     } else {
       dispatch(setLightTheme());
     }
-  };
+  }, [dispatch, theme]);
 
   return (
     <header className={styles.header}>
