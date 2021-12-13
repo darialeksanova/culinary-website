@@ -51,6 +51,7 @@ const getDietFilterValues = ( searchFilterValues: SearchFilterValue ): string[] 
   return dietFilterValues;
 };
 
+// create string for complex search request
 const composeURLSearchParams = ( searchParams: SearchParams ): string => {
   const dietFilterValues = getDietFilterValues(searchParams.filters);
   const complexSearchURLParams: { [key: string]: string } = {
