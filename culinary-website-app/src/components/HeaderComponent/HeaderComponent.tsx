@@ -3,16 +3,22 @@ import logo from 'assets/logo.png';
 import { NavLink } from 'react-router-dom';
 import sun from 'assets/sun.png';
 import moon from 'assets/moon.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { Theme } from 'types/theme';
+import { setDarkTheme, setLightTheme } from 'store/theme/actions';
 
-type Props = {
-  handleThemeSwitch: () => void;
-};
-
-const HeaderComponent = ({ handleThemeSwitch }: Props) => {
+const HeaderComponent = () => {
+  const dispatch = useDispatch();
   const theme = useSelector(( state: RootState ) => state.theme.theme);
+
+  const handleThemeSwitch = (): void => {
+    if (theme === Theme.light) {
+      dispatch(setDarkTheme());
+    } else {
+      dispatch(setLightTheme());
+    }
+  };
 
   return (
     <header className={styles.header}>

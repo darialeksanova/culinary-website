@@ -12,7 +12,6 @@ import { loadFavouriteRecipesFromLocalStorage } from 'store/favouriteRecipes/act
 import { RootState } from 'store/store';
 import classNames from 'classnames/bind';
 import { Theme } from 'types/theme';
-import { setDarkTheme, setLightTheme } from 'store/theme/actions';
 import { setupFetchInterceptor } from 'setupFetchInterceptor';
 
 setupFetchInterceptor();
@@ -26,14 +25,6 @@ function App() {
     dispatch(loadFavouriteRecipesFromLocalStorage());
   }, [ dispatch ]);
 
-  const handleThemeSwitch = (): void => {
-    if (theme === Theme.light) {
-      dispatch(setDarkTheme());
-    } else {
-      dispatch(setLightTheme());
-    }
-  };
-
   return (
     <Router>
       <div className={cx({
@@ -41,7 +32,7 @@ function App() {
           AppDark: theme === Theme.dark,
         })}>
 
-        <HeaderComponent handleThemeSwitch={handleThemeSwitch}/>
+        <HeaderComponent />
 
         <div className={cx({
           main: true,
