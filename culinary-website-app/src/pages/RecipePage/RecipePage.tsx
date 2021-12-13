@@ -57,7 +57,7 @@ const RecipePage = () => {
         fetch(`${apiUrl}/recipes/${params.recipeId}/ingredientWidget.json?apiKey=${apiKey}`)
           .then(response => {
             if(response.ok) {
-              return response.json();
+              return response.json() as Promise<DishIngredients>;
             }
 
             throw new Error('Error on dish ingredients fetch!');

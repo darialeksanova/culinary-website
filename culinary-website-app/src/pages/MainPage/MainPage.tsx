@@ -29,6 +29,7 @@ const MainPage = () => {
 
   const query = useMemo(() => new URLSearchParams(location.search), [ location ]);
 
+  // create object needed to dispatch loadRecipesPreviews action
   const getSearchParamsFromURL = useCallback(( query: URLSearchParams ): SearchParams => {
     const searchInput = query.get('searchInput') || '';
     const totalRecipes = query.get('totalRecipes') || RECIPES_TO_SHOW_INITIAL.toString();
@@ -48,6 +49,7 @@ const MainPage = () => {
     };
   }, []);
 
+  // make search values set by user stay after page is reloaded
   useEffect(() => {
     const searchParams = getSearchParamsFromURL(query);
     dispatch(loadRecipesPreviews(searchParams));
@@ -59,6 +61,7 @@ const MainPage = () => {
     setSearchBarValue(newValue);
   }, []);
 
+  // create string with filter values needed to be set in URLSearchParams to search recipes
   const composeStringFromFilters = useCallback(( filters: SearchFilterValue ): string => {
     const filtersAsArray = [];
 
@@ -81,6 +84,7 @@ const MainPage = () => {
     return filtersAsArray.join(',');
   }, []);
 
+  // update page url after each search or reset click
   const updatePageURL = useCallback(( query: URLSearchParams ): void => {
     navigate(`${location.pathname}?${query.toString()}`);
   }, [ location, navigate ]);
@@ -93,7 +97,7 @@ const MainPage = () => {
     query.set('totalRecipes', totalRecipes);
 
     if (filtersAsString !== '') {
-      query.set('filters', composeStringFromFilters(searchFilterValues));
+      query.set('filters', filtersAsString);
     } else {
       query.delete('filters');
     }
